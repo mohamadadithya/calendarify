@@ -1,0 +1,189 @@
+@import url('https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css');
+
+:root {
+  font-size: 16px;
+  --background: white;
+  --clr-soft-gray: hsl(0, 0%, 94%);
+  --soft-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  --accentColor: #0090FC;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.calendarify {
+  padding: 1em;
+  background: var(--background);
+  box-shadow: var(--soft-box-shadow);
+  width: fit-content;
+  font-family: inherit;
+  border-radius: 1em;
+  display: none;
+
+  &:is(.show) {
+    display: block;
+  }
+
+  button {
+    border: none;
+    background: none;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  .quick-actions {
+    display: flex;
+    align-items: center;
+    gap: .4em;
+    margin-bottom: 1.5em;
+
+    button {
+      padding: .5em .8em;
+      background: var(--clr-soft-gray);
+      border-radius: 1.5em;
+
+      &:hover {
+        background: white;
+        box-shadow: var(--soft-box-shadow);
+      }
+    }
+  }
+
+  .days-wrapper {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: .6em;
+    font-size: .9rem;
+    margin-bottom: .6em;
+
+    li {
+      text-align: center;
+      font-weight: 500;
+    }
+  }
+
+  .dates-wrapper {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: .4em;
+    font-size: .9rem;
+
+    li {
+      text-align: center;
+      
+      button {
+        width: 2.5em;
+        height: 2.3em;
+        border-radius: .8em;
+
+        &:is(.active) {
+          background: var(--accentColor);
+          color: white;
+          font-weight: 600;
+        }
+
+        &:not(.active):is(.holiday) {
+          color: red;
+        }
+
+        &:not(.active):is(.pre-holiday) {
+          color: #0090FC;
+        }
+
+        &:is(:disabled) {
+          cursor: auto;
+        }
+
+        &:not(.active, :disabled):hover {
+          background: var(--clr-soft-gray);
+        }
+      }
+    }
+  }
+
+  .months-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    li {
+      text-align: center;
+
+      & > button {
+        font-size: .95rem;
+        padding: .8em;
+        border-radius: .6em;
+        font-weight: 500;
+
+        &:hover {
+          background: var(--accentColor);
+          color: white;
+        }
+      }
+    }
+  }
+
+  .navigation {
+    ul {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 1em 0;
+
+      li {
+        &:nth-child(2) button {
+          font-weight: 600;
+          font-size: 1.050rem;
+        }
+
+        &:is(:first-child, :last-child) button {
+          border-radius: 50%;
+          box-shadow: var(--soft-box-shadow);
+        }
+
+        button {
+          padding: .38em .5em;
+          border-radius: .6em;
+
+          &:hover {
+            background: var(--clr-soft-gray);
+          }
+        }
+      }
+    }
+  }
+
+  .trigger-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 1em;
+    gap: .5em;
+
+    button {
+      border-radius: .5em;
+      background: var(--clr-soft-gray);
+      font-weight: 500;
+      transition: .2s all ease;
+
+      &:last-child {
+        background: var(--accentColor);
+        color: white;
+        padding: .6em 0;
+      }
+
+      &:hover {
+        scale: .96;
+      }
+    }
+  }
+
+  .d-none {
+    display: none;
+  }
+}
