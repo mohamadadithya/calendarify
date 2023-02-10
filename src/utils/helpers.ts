@@ -1,11 +1,7 @@
-export const render = (
-  container: HTMLAreaElement,
-  dates: string[],
-  days: string[],
-  months: string[],
-  nowDay: string,
-  nowMonth: string
-) => {
+import moment from "moment";
+import type { Date } from "./types";
+
+export const render = (container: HTMLAreaElement, dates: Date[], days: string[], months: string[], years: string[], nowDay: string, nowMonth: string) => {
   container.innerHTML += `<div class="calendarify">
     <div class="quick-actions">
       <button data-action="today">Today</button>
@@ -19,6 +15,7 @@ export const render = (
         </li>
         <li>
           <button data-action="expand" type="button">February 2023</button>
+          <button data-action="year-range" class="d-none" type="button">2023</button>
         </li>
         <li>
           <button data-action="next" type="button"><i class="fas fa-fw fa-chevron-right"></i></button>
@@ -27,26 +24,28 @@ export const render = (
     </nav>
     <div class="calendar">
       <ul class="days-wrapper wrapper">
-      ${days
-        .map((day) => {
-          return `<li>${day}</li>`;
-        })
-        .join("")}
+      ${days.map((day) => { return `<li>${day}</li>` }).join("")}
       </ul>
       <ul class="dates-wrapper wrapper">
           ${dates
             .map((date) => {
               return `<li><button ${
-                date == "" ? "disabled" : ""
-              } type="button" class="date-button ${getHolidayClassHandler(date, nowMonth)} ${
-                nowDay == String(date) ? "active" : ""
-              }">${date}</button></li>`;
+                date.disabled ? "disabled" : ""
+              } type="button" class="date-button ${getHolidayClassHandler(date.date, nowMonth)} ${
+                nowDay == String(date.date) ? "active" : ""
+              }">${date.date}</button></li>`;
             })
             .join("")}
       </ul>
       <ul class="months-wrapper wrapper d-none">
         ${months.map(month => {
-          return `<li><button data-date="${month}" type="button">${month}</button></li>`
+          const nowMonthShort = moment(nowMonth).format('MMM')
+          return `<li><button class="${month == nowMonthShort ? 'active' : ''}" data-date="${month}" type="button">${month}</button></li>`
+        }).join('')}
+      </ul>
+      <ul class="years-wrapper wrapper d-none">
+        ${years.map(year => {
+          return `<li><button data-date="${year}" type="button">${year}</button></li>`
         }).join('')}
       </ul>
     </div>

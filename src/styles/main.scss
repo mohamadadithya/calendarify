@@ -8,6 +8,27 @@
   --accentColor: #0090FC;
 }
 
+@mixin grid($columns, $gap, $isCenter: true) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  @if $isCenter {
+    align-items: center;
+  }
+  gap: $gap;
+}
+
+@mixin buttonExpand {
+  font-size: .95rem;
+  padding: .65em;
+  border-radius: .6em;
+  font-weight: 500;
+
+  &:is(.active, :hover) {
+    background: var(--accentColor);
+    color: white;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -22,6 +43,7 @@
   font-family: inherit;
   border-radius: 1em;
   display: none;
+  width: min(100%, 285px);
 
   &:is(.show) {
     display: block;
@@ -57,9 +79,7 @@
   }
 
   .days-wrapper {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: .6em;
+    @include grid(7, .6em);
     font-size: .9rem;
     margin-bottom: .6em;
 
@@ -70,9 +90,7 @@
   }
 
   .dates-wrapper {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: .4em;
+    @include grid(7, .4em);
     font-size: .9rem;
 
     li {
@@ -94,11 +112,12 @@
         }
 
         &:not(.active):is(.pre-holiday) {
-          color: #0090FC;
+          color: var(--accentColor);
         }
 
         &:is(:disabled) {
           cursor: auto;
+          color: hsl(0, 0%, 70%) !important;
         }
 
         &:not(.active, :disabled):hover {
@@ -109,22 +128,25 @@
   }
 
   .months-wrapper {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    @include grid(4, .5em);
 
     li {
       text-align: center;
 
       & > button {
-        font-size: .95rem;
-        padding: .8em;
-        border-radius: .6em;
-        font-weight: 500;
+        @include buttonExpand;
+      }
+    }
+  }
 
-        &:hover {
-          background: var(--accentColor);
-          color: white;
-        }
+  .years-wrapper {
+    @include grid(4, .5em);
+
+    li {
+      text-align: center;
+
+      & > button {
+        @include buttonExpand;
       }
     }
   }
@@ -160,10 +182,8 @@
   }
 
   .trigger-buttons {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    @include grid(2, .5em, false);
     margin-top: 1em;
-    gap: .5em;
 
     button {
       border-radius: .5em;

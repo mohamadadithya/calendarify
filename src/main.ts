@@ -1,6 +1,7 @@
 import './styles/main.scss'
 import moment from 'moment'
 import { getHolidayClassHandler, render } from './utils/helpers'
+import type { Date, ExpandedMode } from './utils/types'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <input type="text" class="calendarify-input" />`
@@ -9,18 +10,23 @@ class Calendarify {
   public options
   public locale: string
   public rootContainer: HTMLAreaElement
-  public startDate: string = moment().format('YYYY-MM-DD')
+  public format: string = 'YYYY-MM-DD'
+  public startDate: string
   public accentColor: string = '#0090FC'
+  public onTrigger: (outputObject: Object) => void
 
   private _container: HTMLAreaElement
   private _calendarWrapper: HTMLAreaElement
   private _datepickerInput: HTMLInputElement
   private _datesWrapperEl: HTMLAreaElement
+  private _monthsWrapperEl: HTMLAreaElement
+  private _yearsWrapperEl: HTMLAreaElement
   private _days: string[]
   private _months: string[]
-  private _dates: string[]
+  private _dates: Date[]
   private _nowMonth: string
   private _nowDay: string
+  private _nowYear: string
   private _dateButtons: NodeListOf<HTMLButtonElement>
   private _expandButton: HTMLButtonElement
   private _prevButton: HTMLButtonElement
@@ -28,6 +34,11 @@ class Calendarify {
   private _doneButton: HTMLButtonElement
   private _date: string
   private _isExpanded: boolean = false
+  private _expandedMode: ExpandedMode = 'months'
+  private _outputDate: string
+  private _quickButtons: NodeListOf<HTMLButtonElement>
+  private _wrapperEls: NodeListOf<HTMLAreaElement>
+  private _yearRangeButton: HTMLButtonElement
 
   constructor(options: Partial<Calendarify>) {
     const rootElement = document.documentElement
@@ -36,36 +47,49 @@ class Calendarify {
     this.options = Object.assign(this, options)
     rootElement.style.setProperty('--accentColor', this.options.accentColor)
     this.rootContainer = options.rootContainer as HTMLAreaElement
+    this.onTrigger = this.options.onTrigger
+    
+    this.format = this.options.format || 'YYYY-MM-DD'
+    this.startDate = this.options.startDate || moment().format(this.format)
 
     this._date = this.options.startDate
     this._days = moment.weekdaysShort()
     this._months = moment.monthsShort()
     this._nowMonth = moment(this._date).format('MMMM YYYY')
     this._nowDay = moment(this._date).format('D')
+    this._nowYear = moment(this._date).format('YYYY')
+    this._outputDate = moment(this._date).format(this.format)
 
     this._dates = []
 
-    const daysInMonth = moment(this._date).daysInMonth()
-    const firstWeekdayOfTheMonth = moment(new Date(this._nowMonth)).isoWeekday()
-    
-    for(let i = 1; i <= firstWeekdayOfTheMonth; i++) {this._dates.push("")}
-    for(let i = 1; i <= daysInMonth; i++) {this._dates.push(String(i))}
+    this.loopDaysMonths()
 
-    render(this.rootContainer, this._dates, this._days, this._months, this._nowDay, this._nowMonth)
+    render(this.rootContainer, this._dates, this._days, this._months, this._years, this._nowDay, this._nowMonth)
 
     this._container = document.querySelector('.calendarify') as HTMLAreaElement
     this._datepickerInput = document.querySelector('.calendarify-input') as HTMLInputElement
     this._datesWrapperEl = this._container.querySelector('.dates-wrapper') as HTMLAreaElement
+    this._monthsWrapperEl = this._container.querySelector('.months-wrapper') as HTMLAreaElement
+    this._yearsWrapperEl = this._container.querySelector('.years-wrapper') as HTMLAreaElement
     this._expandButton = this._container.querySelector('.navigation button[data-action="expand"]') as HTMLButtonElement
     this._dateButtons = this._container.querySelectorAll('.date-button') as NodeListOf<HTMLButtonElement>
     this._prevButton = this._container.querySelector('.navigation button[data-action="prev"]') as HTMLButtonElement
     this._nextButton = this._container.querySelector('.navigation button[data-action="next"]') as HTMLButtonElement
     this._calendarWrapper = this._container.querySelector('.calendar') as HTMLAreaElement
     this._doneButton = this._container.querySelector('.trigger-buttons button[data-action="done"]') as HTMLButtonElement
+    this._quickButtons = this._container.querySelectorAll('.quick-actions button') as NodeListOf<HTMLButtonElement>
+    this._wrapperEls = this._calendarWrapper.querySelectorAll('.wrapper:not(:last-child, :nth-child(3))') as NodeListOf<HTMLAreaElement>
+    this._yearRangeButton = this._container.querySelector('.navigation button[data-action="year-range"]') as HTMLButtonElement
   }
 
   public init() {
+    this.showValue()
     this.changeState()
+
+    this._datepickerInput.addEventListener('input', (event: Event) => {
+      const targetElement = event.target as HTMLInputElement
+      targetElement.value = this._outputDate
+    })
     
     this._prevButton.addEventListener('click', this.prevMonth.bind(this))
     this._nextButton.addEventListener('click', this.nextMonth.bind(this))
@@ -75,84 +99,227 @@ class Calendarify {
     this._datepickerInput.addEventListener('focus', () => this._container.classList.add('show'))
 
     window.addEventListener('click', this.hideOnOutsideClick.bind(this))
+    this._quickButtons.forEach(button => button.addEventListener('click', this.quickAction.bind(this)))
+  }
+
+  private get _years() {
+    const years = []
+    const dateStart = moment(this._date)
+    const dateEnd = moment(this._date).add(11, 'y')
+    while (dateEnd.diff(dateStart, 'years') >= 0) {
+      years.push(dateStart.format('YYYY'))
+      dateStart.add(1, 'year')
+    }
+    return years
+  }
+
+  private quickAction(event: Event) {
+    const targetElement = event.target as HTMLButtonElement
+    const data = targetElement.getAttribute('data-action')
+
+    switch (data) {
+      case "today":
+        this._date = moment().format(this.format)       
+        break
+      case "tomorrow":
+        this._date = moment().add(1, 'days').format(this.format)
+        break
+      default:
+        this._date = moment().add(2, 'days').format(this.format)
+        break
+    }
+
+    this.showValue()
+    this.changeState()
+    this.resetUI()
+  }
+
+  private showValue() {
+    this._outputDate = moment(this._date).format(this.format)
+    this._datepickerInput.value = this._outputDate
   }
 
   private hideOnOutsideClick(event: Event) {
     const targetElement = event.target as HTMLElement
     if(!targetElement.closest('.calendarify-input') && !targetElement.closest('.calendarify')) {
       this._container.classList.remove('show')
+      this.doneState()
     }
   }
 
   private expand() {
     this._isExpanded = true
     this._expandButton.textContent = moment(this._date).format('YYYY')
-    const wrappers = this._calendarWrapper.querySelectorAll('.wrapper:not(:last-child)') as NodeListOf<HTMLAreaElement>
-    wrappers.forEach(wrapper => wrapper.classList.add('d-none'))
+    this._wrapperEls.forEach(wrapper => wrapper.classList.add('d-none'))
 
-    const monthsWrapper = this._calendarWrapper.querySelector('.months-wrapper') as HTMLAreaElement
-    monthsWrapper.classList.remove('d-none')
+    this._monthsWrapperEl.classList.remove('d-none')
 
-    const monthButtons = monthsWrapper.querySelectorAll('button') as NodeListOf<HTMLButtonElement>
-    monthButtons.forEach(button => {
-      button.addEventListener('click', (event) => this.changeMonth(event, wrappers, monthsWrapper))
-    })
+    this.showMonths()
   }
 
-  private changeMonth(event: Event, wrappers: NodeListOf<HTMLAreaElement>, monthsWrapper: HTMLAreaElement) {
-    wrappers.forEach(wrapper => wrapper.classList.remove('d-none'))
+  private showMonths() {
+    this._expandButton.classList.add('d-none')
+    this._yearRangeButton.classList.remove('d-none')
+    const monthButtons = this._monthsWrapperEl.querySelectorAll('button') as NodeListOf<HTMLButtonElement>
+    monthButtons.forEach(button => button.addEventListener('click', (event) => this.changeMonth(event, monthButtons)))
+
+    this._yearRangeButton.addEventListener('click', this.showYears.bind(this))
+  }
+
+  private showYears() {
+    this._expandedMode = 'years'
+    this._monthsWrapperEl.classList.add('d-none')
+    this._yearsWrapperEl.classList.remove('d-none')
+
+    this._yearsWrapperEl.innerHTML = `${this._years.map(year => {
+      return `<li><button class="${year == this._nowYear ? 'active' : ''}" data-date="${year}" type="button">${year}</button></li>`
+    }).join('')}`
+
+    const yearButtons = this._yearsWrapperEl.querySelectorAll('button') as NodeListOf<HTMLButtonElement>
+    yearButtons.forEach(button => button.addEventListener('click', this.changeYear.bind(this)))
+
+    this.changeState()
+  }
+
+  private changeYear(event: Event) {
+    const targetElement = event.target as HTMLButtonElement
+    const year = targetElement.getAttribute('data-date') as string
+    const month = moment(this._nowMonth).format('MM')
+    this._date = moment(`${year}-${month}-${this._nowDay}`).format(this.format)
+    this._nowYear = year
+    this._yearsWrapperEl.classList.add('d-none')
+    this._monthsWrapperEl.classList.remove('d-none')
+
+    this._expandedMode = 'months'
+    this.changeState()
+  }
+
+  private changeMonth(event: Event, buttons: NodeListOf<HTMLButtonElement>) {
+    this._wrapperEls.forEach(wrapper => wrapper.classList.remove('d-none'))
+    buttons.forEach(button => button.classList.remove('active'))
+    
     const targetElement = event.target as HTMLButtonElement
     const month = targetElement.getAttribute('data-date')
     const year = moment(this._date).format('YYYY')
-    const fullDate = moment(new Date(`${year} ${month}`))
-    this._date = moment(fullDate).format('YYYY-MM')
+    const fullDate = moment(new Date(`${year} ${month} ${this._nowDay}`))
+    this._date = moment(fullDate).format('YYYY-MM-DD')
+
+    targetElement.classList.add('active')
 
     this._isExpanded = false
+    this._expandedMode = 'months'
     this.changeState()
-    monthsWrapper.classList.add('d-none')
+    this.resetUI()
   }
 
   private doneState() {
     this._container.classList.remove('show')
+
+    const object = {
+      date: {
+        default: moment(this._outputDate).toDate(),
+        iso: moment(this._outputDate).toISOString(),
+      },
+      formatted: {
+        relative: moment(this._outputDate).fromNow(),
+        calendar: moment(this._outputDate).calendar()
+      },
+      unix: {
+        seconds: moment(this._outputDate).unix(),
+        milliseconds: +moment(this._outputDate)
+      },
+      locale: this.locale,
+      partials: {
+        day: moment(this._outputDate).format('DD'),
+        month: moment(this._outputDate).format('MM'),
+        year: moment(this._outputDate).format('YYYY')
+      }
+    }
+
+    this.resetUI()
+    this.onTrigger(object)
+  }
+
+  private resetUI() {
+    this._monthsWrapperEl.classList.add('d-none')
+    this._yearsWrapperEl.classList.add('d-none')
+    this._wrapperEls.forEach(wrapper => wrapper.classList.remove('d-none'))
+    this._isExpanded = false
+    this._monthsWrapperEl.classList.add('d-none')
+    this._yearsWrapperEl.classList.add('d-none')
+    this._expandButton.classList.remove('d-none')
+    this._yearRangeButton.classList.add('d-none')
+    this.changeState()
   }
 
   private changeState() {
     this._dates = []
     this._nowMonth = moment(this._date).format('MMMM YYYY')
     this._nowDay = moment(this._date).format('D')
-    const daysInMonth = moment(this._date).daysInMonth()
-    const firstWeekdayOfTheMonth = moment(new Date(this._nowMonth)).isoWeekday()
 
-    this._expandButton.textContent = this._isExpanded ? moment(this._date).format('YYYY') : this._expandButton.textContent = this._nowMonth
-    
-    for(let i = 1; i <= firstWeekdayOfTheMonth; i++) {this._dates.push("")}
-    for(let i = 1; i <= daysInMonth; i++) {this._dates.push(String(i))}
+    this.loopDaysMonths()
 
+    this._expandButton.textContent = this._nowMonth
+
+    switch (this._expandedMode) {
+      case "years":
+        this._yearRangeButton.textContent = `${this._years[0]} - ${this._years[this._years.length - 1]}`
+        break;
+      default:
+        this._yearRangeButton.textContent = moment(this._date).format('YYYY')
+        break;
+    }
+
+    // Render dates to wrapper
     this.renderDates()
 
     this._dateButtons = this._datesWrapperEl.querySelectorAll('.date-button') as NodeListOf<HTMLButtonElement>
     this._dateButtons.forEach(button => button.addEventListener('click', this.setDate.bind(this)))
 
-    const isFirstRowEmpty = this._dates.slice(0, 7).every(date => date === "")
-    if(isFirstRowEmpty) for(let i = 0; i < 7; i++) {this._dateButtons[i].classList.add('d-none')}
+    if(this._expandedMode == 'months') {
+      const isFirstRowDisabled = this._dates.slice(0, 7).every(date => date.disabled)
+      if(isFirstRowDisabled) for(let i = 0; i < 7; i++) {this._dateButtons[i].parentElement?.classList.add('d-none')}
+    }
+  }
+
+  private loopDaysMonths() {
+    const daysInMonth = moment(this._date).daysInMonth()
+    const firstWeekdayOfTheMonth = moment(new Date(this._nowMonth)).isoWeekday()
+    const daysInBeforeMonth = moment(this._date).subtract(1, 'months').daysInMonth()
+
+    // Loop disabled days prev
+    for(let i = 1; i <= firstWeekdayOfTheMonth; i++) { this._dates.unshift({ disabled: true, date: String(daysInBeforeMonth + 1 - i) })}
+    // Loop days of the month
+    for(let i = 1; i <= daysInMonth; i++) {this._dates.push({ disabled: false, date: String(i) })}
   }
 
   private renderDates() {
       this._datesWrapperEl.innerHTML = `${this._dates.map((date) => {
-        return `<li><button ${date == "" ? 'disabled' : ''} type="button" class="date-button ${getHolidayClassHandler(date, this._nowMonth)} ${this._nowDay == String(date) ? 'active' : ''}">${date}</button></li>`
+        return `<li><button ${date.disabled ? 'disabled' : ''} type="button" class="date-button ${getHolidayClassHandler(date.date, this._nowMonth)} ${this._nowDay == String(date.date) ? 'active' : ''}">${date.date}</button></li>`
     }).join('')}`
   }
 
   private setDate(event: Event) {
     const targetElement = event.target as HTMLButtonElement
     this._dateButtons.forEach(button => button.classList.remove('active'))
-
+    this._nowDay = String(targetElement.textContent)
+    this._date = `${moment(this._nowMonth).format('YYYY-MM')}-${this._nowDay}`
+    
+    this.showValue()
     targetElement.classList.add('active')
   }
 
   private prevMonth() {
     if(this._isExpanded) {
-      this._date = moment(this._nowMonth).subtract(1, 'years').format('YYYY-MM')
+      switch (this._expandedMode) {
+        case "months":
+          this._date = moment(this._nowMonth).subtract(1, 'years').format('YYYY-MM')
+          break
+        default:
+          this._date = moment(this._nowMonth).subtract(10, 'years').format('YYYY-MM')
+          this.showYears()
+          break
+      }
     } else {
       this._date = moment(this._nowMonth).subtract(1, 'months').format('YYYY-MM')
     }
@@ -161,7 +328,15 @@ class Calendarify {
 
   private nextMonth() {
     if(this._isExpanded) {
-      this._date = moment(this._nowMonth).add(1, 'years').format('YYYY-MM')
+      switch (this._expandedMode) {
+        case "months":
+          this._date = moment(this._nowMonth).add(1, 'years').format('YYYY-MM')
+          break
+        default:
+          this._date = moment(this._nowMonth).add(10, 'years').format('YYYY-MM')
+          this.showYears()
+          break
+      }
     } else {
       this._date = moment(this._nowMonth).add(1, 'months').format('YYYY-MM')
     }
@@ -171,7 +346,9 @@ class Calendarify {
 
 const calendarify = new Calendarify({
   locale: 'en',
-  rootContainer: document.querySelector('#app') as HTMLAreaElement
+  rootContainer: document.querySelector('#app') as HTMLAreaElement,
+  format: 'LL',
+  onTrigger: (calendarify) => { console.log(calendarify) }
 })
 
 calendarify.init()
