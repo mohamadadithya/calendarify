@@ -64,12 +64,13 @@
     display: flex;
     align-items: center;
     gap: .4em;
-    margin-bottom: 1.5em;
+    margin-bottom: 1em;
 
     button {
-      padding: .5em .8em;
+      padding: .5em 1em;
       background: var(--clr-soft-gray);
       border-radius: 1.5em;
+      font-weight: 500;
 
       &:hover {
         background: white;
@@ -118,6 +119,8 @@
         &:is(:disabled) {
           cursor: auto;
           color: hsl(0, 0%, 70%) !important;
+          background: white;
+          font-weight: 400;
         }
 
         &:not(.active, :disabled):hover {
@@ -190,6 +193,7 @@
       background: var(--clr-soft-gray);
       font-weight: 500;
       transition: .2s all ease;
+      color: gray;
 
       &:last-child {
         background: var(--accentColor);

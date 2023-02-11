@@ -1,16 +1,13 @@
-import { Calendarify } from "./main";
+import { Calendarify } from "./main"
 
-document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-  <input type="text" class="calendarify-input" />`;
+document.querySelector<HTMLDivElement>("#app")!.innerHTML = `<input type="text" class="calendarify-input" />`
 
 const calendarify = new Calendarify({
   rootContainer: document.querySelector("#app") as HTMLAreaElement,
-  onTrigger: (calendarify) => {
-    console.log(calendarify);
-  },
+  onTrigger: (calendarify) => console.log(calendarify),
   quickActions: true,
   locale: {
-    format: "Do MMMM YYYY",
+    format: "DD-MM-YYYY",
     lang: {
       code: 'id',
       months: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
@@ -23,10 +20,10 @@ const calendarify = new Calendarify({
         navigations: {
           reset: "Reset",
           done: "Ya",
-        },
-      },
-    },
-  },
-});
+        }
+      }
+    }
+  }
+})
 
-calendarify.init();
+calendarify.init()
