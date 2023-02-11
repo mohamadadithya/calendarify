@@ -27,7 +27,6 @@ export class Calendarify {
   private _expandButton: HTMLButtonElement
   private _prevButton: HTMLButtonElement
   private _nextButton: HTMLButtonElement
-  private _doneButton: HTMLButtonElement
   private _date: string
   private _isExpanded: boolean = false
   private _expandedMode: ExpandedMode = 'months'
@@ -54,10 +53,6 @@ export class Calendarify {
             today: 'Today',
             tomorrow: 'Tomorrow',
             inTwoDays: 'In 2 Days'
-          },
-          navigations: {
-            reset: 'Reset',
-            done: 'Done',
           }
         },
         months: moment.months(),
@@ -69,10 +64,7 @@ export class Calendarify {
       format: options.locale?.format || localeObject.format,
       lang: {
         code: options.locale?.lang?.code || localeObject.lang.code,
-        ui: {
-          quickActions: options.locale?.lang.ui?.quickActions || localeObject.lang.ui?.quickActions,
-          navigations: options.locale?.lang.ui?.navigations || localeObject.lang.ui?.navigations,
-        },
+        ui: { quickActions: options.locale?.lang.ui?.quickActions || localeObject.lang.ui?.quickActions },
         months: options.locale?.lang.months || localeObject.lang.months,
         weekdays: options.locale?.lang.weekdays || localeObject.lang.weekdays
       }
@@ -117,7 +109,6 @@ export class Calendarify {
     this._prevButton = this._container.querySelector('.navigation button[data-action="prev"]') as HTMLButtonElement
     this._nextButton = this._container.querySelector('.navigation button[data-action="next"]') as HTMLButtonElement
     this._calendarWrapper = this._container.querySelector('.calendar') as HTMLAreaElement
-    this._doneButton = this._container.querySelector('.trigger-buttons button[data-action="done"]') as HTMLButtonElement
     this._quickButtons = this._container.querySelectorAll('.quick-actions button') as NodeListOf<HTMLButtonElement>
     this._wrapperEls = this._calendarWrapper.querySelectorAll('.wrapper:not(:last-child, :nth-child(3))') as NodeListOf<HTMLAreaElement>
     this._yearRangeButton = this._container.querySelector('.navigation button[data-action="year-range"]') as HTMLButtonElement
@@ -137,7 +128,6 @@ export class Calendarify {
     this._nextButton.addEventListener('click', this.nextMonth.bind(this))
 
     this._expandButton.addEventListener('click', this.expand.bind(this))
-    this._doneButton.addEventListener('click', this.doneState.bind(this))
     this._datepickerInput.addEventListener('focus', () => this._container.classList.add('show'))
 
     window.addEventListener('click', this.hideOnOutsideClick.bind(this))

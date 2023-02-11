@@ -16,10 +16,6 @@ const calendarify = new Calendarify({
           today: "Hari Ini",
           tomorrow: "Besok",
           inTwoDays: "Lusa",
-        },
-        navigations: {
-          reset: "Reset",
-          done: "Ya",
         }
       }
     }

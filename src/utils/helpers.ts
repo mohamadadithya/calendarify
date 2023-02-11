@@ -51,10 +51,6 @@ export const render = (args: Render) => {
         }).join('')}
       </ul>
     </div>
-    <div class="trigger-buttons">
-      <button data-action="reset" type="button">${locale.lang.ui?.navigations?.reset}</button>
-      <button data-action="done" type="button">${locale.lang.ui?.navigations?.done}</button>
-    </div>
   </div>`;
 };
 

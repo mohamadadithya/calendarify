@@ -10,10 +10,6 @@ interface Lang {
       today?: string,
       tomorrow?: string,
       inTwoDays?: string
-    },
-    navigations?: {
-      reset?: string,
-      done?: string
     }
   },
   months?: string[],
