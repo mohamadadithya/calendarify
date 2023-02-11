@@ -3,10 +3,7 @@ import moment from 'moment'
 import { getHolidayClassHandler, render } from './utils/helpers'
 import type { Date, ExpandedMode, Locale } from './utils/types'
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <input type="text" class="calendarify-input" />`
-
-class Calendarify {
+export class Calendarify {
   public options
   public locale: Locale
   public rootContainer: HTMLAreaElement
@@ -21,7 +18,6 @@ class Calendarify {
   private _datesWrapperEl: HTMLAreaElement
   private _monthsWrapperEl: HTMLAreaElement
   private _yearsWrapperEl: HTMLAreaElement
-  private _days: string[]
   private _months: string[]
   private _dates: Date[]
   private _nowMonth: string
@@ -39,26 +35,56 @@ class Calendarify {
   private _quickButtons: NodeListOf<HTMLButtonElement>
   private _wrapperEls: NodeListOf<HTMLAreaElement>
   private _yearRangeButton: HTMLButtonElement
+  private _systemFormat: string = 'YYYY-MM-DD'
 
   constructor(options: Partial<Calendarify>) {
     const rootElement = document.documentElement
 
-    this.locale = {
-      format: options.locale?.format || 'YYYY-MM-DD',
-      lang: options.locale?.lang || 'en',
-    }
-
-    moment.locale(this.locale.lang)
     this.options = Object.assign(this, options)
     rootElement.style.setProperty('--accentColor', this.options.accentColor)
     this.rootContainer = options.rootContainer as HTMLAreaElement
     this.onTrigger = this.options.onTrigger
-    this.startDate = this.options.startDate || moment().format(this.locale.format)
 
+    const localeObject: Locale = {
+      format: this._systemFormat,
+      lang: {
+        code: 'en',
+        ui: {
+          quickActions: {
+            today: 'Today',
+            tomorrow: 'Tomorrow',
+            inTwoDays: 'In 2 Days'
+          },
+          navigations: {
+            reset: 'Reset',
+            done: 'Done',
+          }
+        },
+        months: moment.months(),
+        weekdays: moment.weekdays()
+      }
+    }
+
+    this.locale = {
+      format: options.locale?.format || localeObject.format,
+      lang: {
+        code: options.locale?.lang?.code || localeObject.lang.code,
+        ui: {
+          quickActions: options.locale?.lang.ui?.quickActions || localeObject.lang.ui?.quickActions,
+          navigations: options.locale?.lang.ui?.navigations || localeObject.lang.ui?.navigations,
+        },
+        months: options.locale?.lang.months || localeObject.lang.months,
+        weekdays: options.locale?.lang.weekdays || localeObject.lang.weekdays
+      }
+    }
+
+    this.startDate = this.options.startDate || moment().format(this.locale.format)
     this._date = this.options.startDate
-    this._days = moment.weekdaysShort()
-    this._months = moment.monthsShort()
-    this._nowMonth = moment(this._date).format('MMMM YYYY')
+    
+    this._months = []
+    for(let i = 0; i < 12; i++) {this._months.push(String(i + 1))}
+
+    this._nowMonth = moment(this._date).format('YYYY-MM')
     this._nowDay = moment(this._date).format('D')
     this._nowYear = moment(this._date).format('YYYY')
     this._outputDate = moment(this._date).format(this.locale.format)
@@ -70,13 +96,15 @@ class Calendarify {
     render({
       container: this.rootContainer,
       dates: this._dates,
-      days: this._days,
       months: this._months,
       years: this._years,
       nowMonth: this._nowMonth,
       nowDay: this._nowDay,
-      quickActions: this.options.quickActions
+      quickActions: this.options.quickActions,
+      locale: this.options.locale
     })
+
+    moment.locale(this.options.locale.lang.code)
 
     this._container = document.querySelector('.calendarify') as HTMLAreaElement
     this._datepickerInput = document.querySelector('.calendarify-input') as HTMLInputElement
@@ -214,7 +242,7 @@ class Calendarify {
     const month = targetElement.getAttribute('data-date')
     const year = moment(this._date).format('YYYY')
     const fullDate = moment(new Date(`${year} ${month} ${this._nowDay}`))
-    this._date = moment(fullDate).format('YYYY-MM-DD')
+    this._date = moment(fullDate).format(this._systemFormat)
 
     targetElement.classList.add('active')
 
@@ -266,12 +294,12 @@ class Calendarify {
 
   private changeState() {
     this._dates = []
-    this._nowMonth = moment(this._date).format('MMMM YYYY')
+    this._nowMonth = moment(this._date).format('YYYY-MM')
     this._nowDay = moment(this._date).format('D')
 
     this.loopDaysMonths()
 
-    this._expandButton.textContent = this._nowMonth
+    this._expandButton.textContent = moment(this._nowMonth).format('MMMM YYYY')
 
     switch (this._expandedMode) {
       case "years":
@@ -307,7 +335,7 @@ class Calendarify {
 
   private renderDates() {
       this._datesWrapperEl.innerHTML = `${this._dates.map((date) => {
-        return `<li><button ${date.disabled ? 'disabled' : ''} type="button" class="date-button ${getHolidayClassHandler(date.date, this._nowMonth)} ${this._nowDay == String(date.date) ? 'active' : ''}">${date.date}</button></li>`
+        return `<li><button ${date.disabled ? 'disabled' : ''} type="button" class="date-button ${getHolidayClassHandler({ date: date.date, nowMonth: this._nowMonth })} ${this._nowDay == String(date.date) ? 'active' : ''}">${date.date}</button></li>`
     }).join('')}`
   }
 
@@ -315,7 +343,7 @@ class Calendarify {
     const targetElement = event.target as HTMLButtonElement
     this._dateButtons.forEach(button => button.classList.remove('active'))
     this._nowDay = String(targetElement.textContent)
-    this._date = `${moment(this._nowMonth).format('YYYY-MM')}-${this._nowDay}`
+    this._date = `${moment(`${this._nowMonth}-${this._nowDay}`).format(this._systemFormat)}`
     
     this.showValue()
     targetElement.classList.add('active')
@@ -325,15 +353,15 @@ class Calendarify {
     if(this._isExpanded) {
       switch (this._expandedMode) {
         case "months":
-          this._date = moment(this._nowMonth).subtract(1, 'years').format('YYYY-MM')
+          this._date = moment(`${this._nowMonth}-${this._nowDay}`).subtract(1, 'years').format(this._systemFormat)
           break
         default:
-          this._date = moment(this._nowMonth).subtract(10, 'years').format('YYYY-MM')
+          this._date = moment(`${this._nowMonth}-${this._nowDay}`).subtract(10, 'years').format(this._systemFormat)
           this.showYears()
           break
       }
     } else {
-      this._date = moment(this._nowMonth).subtract(1, 'months').format('YYYY-MM')
+      this._date = moment(`${this._nowMonth}-${this._nowDay}`).subtract(1, 'months').format(this._systemFormat)
     }
     this.changeState()
   }
@@ -342,24 +370,16 @@ class Calendarify {
     if(this._isExpanded) {
       switch (this._expandedMode) {
         case "months":
-          this._date = moment(this._nowMonth).add(1, 'years').format('YYYY-MM')
+          this._date = moment(`${this._nowMonth}-${this._nowDay}`).add(1, 'years').format(this._systemFormat)
           break
         default:
-          this._date = moment(this._nowMonth).add(10, 'years').format('YYYY-MM')
+          this._date = moment(`${this._nowMonth}-${this._nowDay}`).add(10, 'years').format(this._systemFormat)
           this.showYears()
           break
       }
     } else {
-      this._date = moment(this._nowMonth).add(1, 'months').format('YYYY-MM')
+      this._date = moment(`${this._nowMonth}-${this._nowDay}`).add(1, 'months').format(this._systemFormat)
     }
     this.changeState()
   }
 }
-
-const calendarify = new Calendarify({
-  rootContainer: document.querySelector('#app') as HTMLAreaElement,
-  onTrigger: (calendarify) => { console.log(calendarify) },
-  quickActions: true
-})
-
-calendarify.init()

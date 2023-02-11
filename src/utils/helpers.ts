@@ -1,13 +1,13 @@
 import moment from "moment";
-import type { Render } from "./types";
+import type { Render, HolidayClassHandler } from "./types";
 
 export const render = (args: Render) => {
-  const { container, dates, days, months, years, nowDay, nowMonth, quickActions } = args;
+  const { container, dates, months, years, nowDay, nowMonth, quickActions, locale } = args;
   container.innerHTML += `<div class="calendarify">
     <div class="quick-actions ${!quickActions ? 'd-none' : ''}">
-      <button data-action="today">Today</button>
-      <button data-action="tomorrow">Tomorrow</button>
-      <button data-action="in-2-days">In 2 Days</button>
+      <button data-action="today">${locale.lang.ui?.quickActions?.today}</button>
+      <button data-action="tomorrow">${locale.lang.ui?.quickActions?.tomorrow}</button>
+      <button data-action="in-2-days">${locale.lang.ui?.quickActions?.inTwoDays}</button>
     </div>
     <nav class="navigation">
       <ul>
@@ -15,8 +15,8 @@ export const render = (args: Render) => {
           <button data-action="prev" type="button"><i class="fas fa-fw fa-chevron-left"></i></button>
         </li>
         <li>
-          <button data-action="expand" type="button">February 2023</button>
-          <button data-action="year-range" class="d-none" type="button">2023</button>
+          <button data-action="expand" type="button">-</button>
+          <button data-action="year-range" class="d-none" type="button">-</button>
         </li>
         <li>
           <button data-action="next" type="button"><i class="fas fa-fw fa-chevron-right"></i></button>
@@ -25,23 +25,24 @@ export const render = (args: Render) => {
     </nav>
     <div class="calendar">
       <ul class="days-wrapper wrapper">
-      ${days.map((day) => { return `<li>${day}</li>` }).join("")}
+      ${locale.lang.weekdays?.map((day) => { return `<li>${day.slice(0, 3)}</li>` }).join("")}
       </ul>
       <ul class="dates-wrapper wrapper">
           ${dates
             .map((date) => {
               return `<li><button ${
                 date.disabled ? "disabled" : ""
-              } type="button" class="date-button ${getHolidayClassHandler(date.date, nowMonth)} ${
+              } type="button" class="date-button ${getHolidayClassHandler({ date: date.date, nowMonth: nowMonth })} ${
                 nowDay == String(date.date) ? "active" : ""
               }">${date.date}</button></li>`;
             })
             .join("")}
       </ul>
       <ul class="months-wrapper wrapper d-none">
-        ${months.map(month => {
-          const nowMonthShort = moment(nowMonth).format('MMM')
-          return `<li><button class="${month == nowMonthShort ? 'active' : ''}" data-date="${month}" type="button">${month}</button></li>`
+        ${months.map((month, index) => {
+          const monthShort = locale.lang.months![index].slice(0, 3)
+          const nowMonthOnly = moment().format('M')
+          return `<li><button class="${month == nowMonthOnly ? 'active' : ''}" data-date="${month}" type="button">${monthShort}</button></li>`
         }).join('')}
       </ul>
       <ul class="years-wrapper wrapper d-none">
@@ -51,14 +52,15 @@ export const render = (args: Render) => {
       </ul>
     </div>
     <div class="trigger-buttons">
-      <button data-action="reset" type="button">Reset</button>
-      <button data-action="done" type="button">Done</button>
+      <button data-action="reset" type="button">${locale.lang.ui?.navigations?.reset}</button>
+      <button data-action="done" type="button">${locale.lang.ui?.navigations?.done}</button>
     </div>
   </div>`;
 };
 
-export const getHolidayClassHandler = (date: string, nowMonth: string) => {
-  const dayPosition = new Date(`${date} ${nowMonth}`).getDay();
+export const getHolidayClassHandler = (args: HolidayClassHandler) => {
+  const { nowMonth, date } = args;
+  const dayPosition = new Date(`${nowMonth}-${date}`).getDay();
   const isHoliday = dayPosition === 0;
   const isPreHoliday = dayPosition === 6;
 
