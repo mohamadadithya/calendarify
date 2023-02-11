@@ -36,7 +36,7 @@ export class Calendarify {
   private _yearRangeButton: HTMLButtonElement
   private _systemFormat: string = 'YYYY-MM-DD'
 
-  constructor(options: Partial<Calendarify>) {
+  constructor(inputSelector: string, options: Partial<Calendarify>) {
     const rootElement = document.documentElement
 
     this.options = Object.assign(this, options)
@@ -100,7 +100,7 @@ export class Calendarify {
     moment.updateLocale(this.options.locale.lang.code!, { months, weekdays })
 
     this._container = document.querySelector('.calendarify') as HTMLAreaElement
-    this._datepickerInput = document.querySelector('.calendarify-input') as HTMLInputElement
+    this._datepickerInput = document.querySelector(inputSelector) as HTMLInputElement
     this._datesWrapperEl = this._container.querySelector('.dates-wrapper') as HTMLAreaElement
     this._monthsWrapperEl = this._container.querySelector('.months-wrapper') as HTMLAreaElement
     this._yearsWrapperEl = this._container.querySelector('.years-wrapper') as HTMLAreaElement

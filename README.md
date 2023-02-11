@@ -9,7 +9,7 @@ import { Calendarify } from "calendarify"
 
 const calendarWrapper = document.querySelector('.wrapper-element') // Container or wrapper element to append calendarify
 
-const calendarify = new Calendarify({
+const calendarify = new Calendarify('.wrapper-element', {
   rootContainer: calendarWrapper,
   onTrigger: (calendarify) => console.log(calendarify), // You can trigger whatever function in this property (e.g. to fetch data with passed date parameter)
   quickActions: true, // You can enable/disable quick action (Today, Tomorrow, In 2 Days) buttons with boolean
