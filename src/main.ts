@@ -6,7 +6,6 @@ import type { Date, ExpandedMode, Locale } from './utils/types'
 export class Calendarify {
   public options
   public locale: Locale
-  public rootContainer: HTMLAreaElement
   public startDate: string
   public accentColor: string = '#0090FC'
   public quickActions: boolean = true
@@ -41,7 +40,6 @@ export class Calendarify {
 
     this.options = Object.assign(this, options)
     rootElement.style.setProperty('--accentColor', this.options.accentColor)
-    this.rootContainer = options.rootContainer as HTMLAreaElement
     this.onTrigger = this.options.onTrigger
 
     const localeObject: Locale = {
@@ -86,7 +84,7 @@ export class Calendarify {
     this.loopDaysMonths()
 
     render({
-      container: this.rootContainer,
+      container: document.querySelector(inputSelector)?.parentElement as HTMLAreaElement,
       dates: this._dates,
       months: this._months,
       years: this._years,
@@ -123,6 +121,10 @@ export class Calendarify {
       const targetElement = event.target as HTMLInputElement
       targetElement.value = this._outputDate
     })
+
+    const wrapper = this._datepickerInput.parentElement as HTMLAreaElement
+    wrapper.style.position = 'relative'
+    this._container.style.top = `${this._datepickerInput.clientHeight + 12}px`
     
     this._prevButton.addEventListener('click', this.prevMonth.bind(this))
     this._nextButton.addEventListener('click', this.nextMonth.bind(this))

@@ -36,6 +36,9 @@
 }
 
 .calendarify {
+  position: absolute;
+  left: 0;
+  z-index: 9999;
   padding: 1em;
   background: var(--background);
   box-shadow: var(--soft-box-shadow);
