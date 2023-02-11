@@ -1,18 +1,18 @@
 import './styles/main.scss'
 import moment from 'moment'
 import { getHolidayClassHandler, render } from './utils/helpers'
-import type { Date, ExpandedMode } from './utils/types'
+import type { Date, ExpandedMode, Locale } from './utils/types'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <input type="text" class="calendarify-input" />`
 
 class Calendarify {
   public options
-  public locale: string
+  public locale: Locale
   public rootContainer: HTMLAreaElement
-  public format: string = 'YYYY-MM-DD'
   public startDate: string
   public accentColor: string = '#0090FC'
+  public quickActions: boolean = true
   public onTrigger: (outputObject: Object) => void
 
   private _container: HTMLAreaElement
@@ -42,15 +42,18 @@ class Calendarify {
 
   constructor(options: Partial<Calendarify>) {
     const rootElement = document.documentElement
-    this.locale = 'en'
-    moment.locale(this.locale)
+
+    this.locale = {
+      format: options.locale?.format || 'YYYY-MM-DD',
+      lang: options.locale?.lang || 'en',
+    }
+
+    moment.locale(this.locale.lang)
     this.options = Object.assign(this, options)
     rootElement.style.setProperty('--accentColor', this.options.accentColor)
     this.rootContainer = options.rootContainer as HTMLAreaElement
     this.onTrigger = this.options.onTrigger
-    
-    this.format = this.options.format || 'YYYY-MM-DD'
-    this.startDate = this.options.startDate || moment().format(this.format)
+    this.startDate = this.options.startDate || moment().format(this.locale.format)
 
     this._date = this.options.startDate
     this._days = moment.weekdaysShort()
@@ -58,13 +61,22 @@ class Calendarify {
     this._nowMonth = moment(this._date).format('MMMM YYYY')
     this._nowDay = moment(this._date).format('D')
     this._nowYear = moment(this._date).format('YYYY')
-    this._outputDate = moment(this._date).format(this.format)
+    this._outputDate = moment(this._date).format(this.locale.format)
 
     this._dates = []
 
     this.loopDaysMonths()
 
-    render(this.rootContainer, this._dates, this._days, this._months, this._years, this._nowDay, this._nowMonth)
+    render({
+      container: this.rootContainer,
+      dates: this._dates,
+      days: this._days,
+      months: this._months,
+      years: this._years,
+      nowMonth: this._nowMonth,
+      nowDay: this._nowDay,
+      quickActions: this.options.quickActions
+    })
 
     this._container = document.querySelector('.calendarify') as HTMLAreaElement
     this._datepickerInput = document.querySelector('.calendarify-input') as HTMLInputElement
@@ -119,13 +131,13 @@ class Calendarify {
 
     switch (data) {
       case "today":
-        this._date = moment().format(this.format)       
+        this._date = moment().format(this.locale.format)       
         break
       case "tomorrow":
-        this._date = moment().add(1, 'days').format(this.format)
+        this._date = moment().add(1, 'days').format(this.locale.format)
         break
       default:
-        this._date = moment().add(2, 'days').format(this.format)
+        this._date = moment().add(2, 'days').format(this.locale.format)
         break
     }
 
@@ -135,7 +147,7 @@ class Calendarify {
   }
 
   private showValue() {
-    this._outputDate = moment(this._date).format(this.format)
+    this._outputDate = moment(this._date).format(this.locale.format)
     this._datepickerInput.value = this._outputDate
   }
 
@@ -185,7 +197,7 @@ class Calendarify {
     const targetElement = event.target as HTMLButtonElement
     const year = targetElement.getAttribute('data-date') as string
     const month = moment(this._nowMonth).format('MM')
-    this._date = moment(`${year}-${month}-${this._nowDay}`).format(this.format)
+    this._date = moment(`${year}-${month}-${this._nowDay}`).format(this.locale.format)
     this._nowYear = year
     this._yearsWrapperEl.classList.add('d-none')
     this._monthsWrapperEl.classList.remove('d-none')
@@ -264,10 +276,10 @@ class Calendarify {
     switch (this._expandedMode) {
       case "years":
         this._yearRangeButton.textContent = `${this._years[0]} - ${this._years[this._years.length - 1]}`
-        break;
+        break
       default:
         this._yearRangeButton.textContent = moment(this._date).format('YYYY')
-        break;
+        break
     }
 
     // Render dates to wrapper
@@ -345,10 +357,9 @@ class Calendarify {
 }
 
 const calendarify = new Calendarify({
-  locale: 'en',
   rootContainer: document.querySelector('#app') as HTMLAreaElement,
-  format: 'LL',
-  onTrigger: (calendarify) => { console.log(calendarify) }
+  onTrigger: (calendarify) => { console.log(calendarify) },
+  quickActions: true
 })
 
 calendarify.init()

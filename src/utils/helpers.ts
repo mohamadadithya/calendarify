@@ -1,9 +1,10 @@
 import moment from "moment";
-import type { Date } from "./types";
+import type { Render } from "./types";
 
-export const render = (container: HTMLAreaElement, dates: Date[], days: string[], months: string[], years: string[], nowDay: string, nowMonth: string) => {
+export const render = (args: Render) => {
+  const { container, dates, days, months, years, nowDay, nowMonth, quickActions } = args;
   container.innerHTML += `<div class="calendarify">
-    <div class="quick-actions">
+    <div class="quick-actions ${!quickActions ? 'd-none' : ''}">
       <button data-action="today">Today</button>
       <button data-action="tomorrow">Tomorrow</button>
       <button data-action="in-2-days">In 2 Days</button>
