@@ -19,7 +19,6 @@
     "vite": "^4.1.0"
   },
   "dependencies": {
-    "moment": "^2.29.4",
-    "moment-with-locales-es6": "^1.0.1"
+    "moment": "^2.29.4"
   }
 }

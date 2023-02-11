@@ -10,9 +10,10 @@ const calendarify = new Calendarify({
   },
   quickActions: true,
   locale: {
-    format: "YYYY/MM/DD",
+    format: "Do MMMM YYYY",
     lang: {
       code: 'id',
+      months: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
       ui: {
         quickActions: {
           today: "Hari Ini",

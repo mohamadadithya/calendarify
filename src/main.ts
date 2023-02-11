@@ -78,7 +78,7 @@ export class Calendarify {
       }
     }
 
-    this.startDate = this.options.startDate || moment().format(this.locale.format)
+    this.startDate = this.options.startDate || moment().format(this._systemFormat)
     this._date = this.options.startDate
     
     this._months = []
@@ -104,7 +104,10 @@ export class Calendarify {
       locale: this.options.locale
     })
 
-    moment.locale(this.options.locale.lang.code)
+    moment.updateLocale(this.options.locale.lang.code!, {
+      months: this.options.locale.lang.months,
+      weekdays: this.options.locale.lang.weekdays
+    })
 
     this._container = document.querySelector('.calendarify') as HTMLAreaElement
     this._datepickerInput = document.querySelector('.calendarify-input') as HTMLInputElement
@@ -159,13 +162,13 @@ export class Calendarify {
 
     switch (data) {
       case "today":
-        this._date = moment().format(this.locale.format)       
+        this._date = moment().format(this._systemFormat)       
         break
       case "tomorrow":
-        this._date = moment().add(1, 'days').format(this.locale.format)
+        this._date = moment().add(1, 'days').format(this._systemFormat)
         break
       default:
-        this._date = moment().add(2, 'days').format(this.locale.format)
+        this._date = moment().add(2, 'days').format(this._systemFormat)
         break
     }
 
@@ -225,7 +228,7 @@ export class Calendarify {
     const targetElement = event.target as HTMLButtonElement
     const year = targetElement.getAttribute('data-date') as string
     const month = moment(this._nowMonth).format('MM')
-    this._date = moment(`${year}-${month}-${this._nowDay}`).format(this.locale.format)
+    this._date = moment(`${year}-${month}-${this._nowDay}`).format(this._systemFormat)
     this._nowYear = year
     this._yearsWrapperEl.classList.add('d-none')
     this._monthsWrapperEl.classList.remove('d-none')
@@ -299,7 +302,9 @@ export class Calendarify {
 
     this.loopDaysMonths()
 
-    this._expandButton.textContent = moment(this._nowMonth).format('MMMM YYYY')
+    const formattedMonth = moment(this._nowMonth).format('M')
+    const formattedYear = moment(this._nowMonth).format('YYYY')
+    this._expandButton.textContent = `${this.locale.lang.months![+formattedMonth - 1]} ${formattedYear}`
 
     switch (this._expandedMode) {
       case "years":
