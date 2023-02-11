@@ -3,9 +3,12 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/calendarify.umd.cjs",
   "module": "./dist/calendarify.js",
+  "types": "./dist/main.d.ts",
   "exports": {
     ".": {
       "import": "./dist/calendarify.js",
@@ -29,7 +32,8 @@
     "vite": "^4.1.0"
   },
   "dependencies": {
-    "moment": "^2.29.4"
+    "moment": "^2.29.4",
+    "vite-plugin-dts": "^1.7.2"
   },
   "repository": {
     "type": "git",
