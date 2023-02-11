@@ -104,10 +104,8 @@ export class Calendarify {
       locale: this.options.locale
     })
 
-    moment.updateLocale(this.options.locale.lang.code!, {
-      months: this.options.locale.lang.months,
-      weekdays: this.options.locale.lang.weekdays
-    })
+    const { months, weekdays } = this.options.locale.lang
+    moment.updateLocale(this.options.locale.lang.code!, { months, weekdays })
 
     this._container = document.querySelector('.calendarify') as HTMLAreaElement
     this._datepickerInput = document.querySelector('.calendarify-input') as HTMLInputElement
@@ -129,6 +127,7 @@ export class Calendarify {
     this.showValue()
     this.changeState()
 
+    this._datepickerInput.spellcheck = false
     this._datepickerInput.addEventListener('input', (event: Event) => {
       const targetElement = event.target as HTMLInputElement
       targetElement.value = this._outputDate
