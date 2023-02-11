@@ -1,7 +1,7 @@
 {
   "name": "calendarify",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "browserslist": [
     "last 2 versions"
@@ -21,5 +21,16 @@
   "dependencies": {
     "moment": "^2.29.4",
     "moment-with-locales-es6": "^1.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mohamadadithya/calendarify"
+  },
+  "keywords": ["datepicker", "calendar", "calendarify"],
+  "author": "Mohamad Adithya",
+  "bugs": {
+    "url": "https://github.com/mohamadadithya/calendarify/issues"
+  },
+  "homepage": "https://github.com/mohamadadithya/calendarify#readme",
+  "license": "MIT"
 }
