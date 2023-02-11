@@ -13,20 +13,24 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/node": "^18.13.0",
     "autoprefixer": "^10.4.13",
     "sass": "^1.58.0",
     "typescript": "^4.9.3",
     "vite": "^4.1.0"
   },
   "dependencies": {
-    "moment": "^2.29.4",
-    "moment-with-locales-es6": "^1.0.1"
+    "moment": "^2.29.4"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/mohamadadithya/calendarify"
   },
-  "keywords": ["datepicker", "calendar", "calendarify"],
+  "keywords": [
+    "datepicker",
+    "calendar",
+    "calendarify"
+  ],
   "author": "Mohamad Adithya",
   "bugs": {
     "url": "https://github.com/mohamadadithya/calendarify/issues"
