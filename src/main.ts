@@ -122,9 +122,7 @@ export class Calendarify {
       targetElement.value = this._outputDate
     })
 
-    const wrapper = this._datepickerInput.parentElement as HTMLAreaElement
-    wrapper.style.position = 'relative'
-    this._container.style.top = `${this._datepickerInput.clientHeight + 12}px`
+    this.stylingContainer()
     
     this._prevButton.addEventListener('click', this.prevMonth.bind(this))
     this._nextButton.addEventListener('click', this.nextMonth.bind(this))
@@ -134,6 +132,12 @@ export class Calendarify {
 
     window.addEventListener('click', this.hideOnOutsideClick.bind(this))
     this._quickButtons.forEach(button => button.addEventListener('click', this.quickAction.bind(this)))
+  }
+
+  private stylingContainer() {
+    const wrapper = this._datepickerInput.parentElement as HTMLAreaElement
+    wrapper.style.position = 'relative'
+    this._container.style.top = `${this._datepickerInput.clientHeight + 12}px`
   }
 
   private get _years() {
