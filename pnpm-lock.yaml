@@ -3,12 +3,14 @@ lockfileVersion: 5.4
 specifiers:
   autoprefixer: ^10.4.13
   moment: ^2.29.4
+  moment-with-locales-es6: ^1.0.1
   sass: ^1.58.0
   typescript: ^4.9.3
   vite: ^4.1.0
 
 dependencies:
   moment: 2.29.4
+  moment-with-locales-es6: 1.0.1_moment@2.29.4
 
 devDependencies:
   autoprefixer: 10.4.13
@@ -390,6 +392,14 @@ packages:
     resolution: {integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==}
     engines: {node: '>=0.12.0'}
     dev: true
+
+  /moment-with-locales-es6/1.0.1_moment@2.29.4:
+    resolution: {integrity: sha512-aKHuk7hHGVGk1X86rhu4aVwSEpBEwL3Lo5BEvZnqGueZeVK9pfpTrlLT3qN4A64vMkiKkxWpwQCcyg2YpoZGaQ==}
+    peerDependencies:
+      moment: ^2.0.0
+    dependencies:
+      moment: 2.29.4
+    dev: false
 
   /moment/2.29.4:
     resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
