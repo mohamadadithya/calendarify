@@ -395,3 +395,6 @@ export default class Calendarify {
     this.changeState()
   }
 }
+
+var global: any = window || global;
+global.Calendarify = Calendarify
