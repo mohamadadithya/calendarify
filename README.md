@@ -48,7 +48,7 @@ pnpm add calendarify
 
 #### ES6
 ```javascript
-import { Calendarify } from "calendarify"
+import Calendarify from "calendarify"
 
 const calendarify = new Calendarify('.input-element', { // Pass input selector to append calendarify
   onTrigger: (calendarify) => console.log(calendarify), // You can trigger whatever function in this property (e.g. to fetch data with passed date parameter)
