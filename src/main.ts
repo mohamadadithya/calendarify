@@ -1,6 +1,6 @@
 import './styles/main.scss'
 import moment from 'moment'
-import { getHolidayClassHandler, render } from './utils/helpers'
+import { Helpers } from './utils/helpers'
 import type { Date, ExpandedMode, Locale } from './utils/types'
 
 export class Calendarify {
@@ -34,6 +34,7 @@ export class Calendarify {
   private _wrapperEls: NodeListOf<HTMLAreaElement>
   private _yearRangeButton: HTMLButtonElement
   private _systemFormat: string = 'YYYY-MM-DD'
+  private _helpers: any
 
   constructor(inputSelector: string, options: Partial<Calendarify>) {
     const rootElement = document.documentElement
@@ -83,7 +84,7 @@ export class Calendarify {
 
     this.loopDaysMonths()
 
-    render({
+    this._helpers = new Helpers({
       container: document.querySelector(inputSelector)?.parentElement as HTMLAreaElement,
       dates: this._dates,
       months: this._months,
@@ -93,6 +94,8 @@ export class Calendarify {
       quickActions: this.options.quickActions,
       locale: this.options.locale
     })
+
+    this._helpers.render()
 
     const { months, weekdays } = this.options.locale.lang
     moment.updateLocale(this.options.locale.lang.code!, { months, weekdays })
@@ -335,7 +338,7 @@ export class Calendarify {
 
   private renderDates() {
       this._datesWrapperEl.innerHTML = `${this._dates.map((date) => {
-        return `<li><button ${date.disabled ? 'disabled' : ''} type="button" class="date-button ${getHolidayClassHandler({ date: date.date, nowMonth: this._nowMonth })} ${this._nowDay == String(date.date) ? 'active' : ''}">${date.date}</button></li>`
+        return `<li><button ${date.disabled ? 'disabled' : ''} type="button" class="date-button ${this._helpers.getHolidayClass({ date: date.date, nowMonth: this._nowMonth })} ${this._nowDay == String(date.date) ? 'active' : ''}">${date.date}</button></li>`
     }).join('')}`
   }
 

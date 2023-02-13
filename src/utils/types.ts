@@ -34,7 +34,7 @@ export interface Locale {
     lang: Lang
 }
 
-export interface HolidayClassHandler {
+export interface HolidayClass {
   date: string,
   nowMonth: string
 }
