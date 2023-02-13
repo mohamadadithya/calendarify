@@ -1,9 +1,9 @@
 {
   "name": "calendarify",
   "private": false,
-  "version": "0.0.2",
+  "version": "0.0.4",
   "type": "module",
-  "files": ["dist/*.css"],
+  "files": ["dist/*.css", "dist/*.js"],
   "main": "./dist/calendarify.umd.cjs",
   "module": "./dist/calendarify.js",
   "types": "./dist/main.d.ts",
