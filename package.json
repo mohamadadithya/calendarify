@@ -3,7 +3,7 @@
   "private": false,
   "version": "0.0.4",
   "type": "module",
-  "files": ["dist/*.css", "dist/*.js"],
+  "files": ["dist/*.css", "dist/*.js", "dist/*.ts"],
   "main": "./dist/calendarify.umd.cjs",
   "module": "./dist/calendarify.js",
   "types": "./dist/main.d.ts",
