@@ -11,7 +11,7 @@ const calendarify = new Calendarify('.input-element', { // Pass input selector t
   onTrigger: (calendarify) => console.log(calendarify), // You can trigger whatever function in this property (e.g. to fetch data with passed date parameter)
   quickActions: true, // You can enable/disable quick action (Today, Tomorrow, In 2 Days) buttons with boolean
   locale: { // You can set locale for calendar
-    format: "DD-MM-YYYY",
+    format: "DD-MM-YYYY", // Set Custom Format with Moment JS
     lang: {
       code: 'id', // Set country code (e.g. "en", "id", etc)
       months: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'], // Or you can use locale moment.months instead
