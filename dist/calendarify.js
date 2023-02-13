@@ -2804,5 +2804,5 @@ class Ei {
   }
 }
 export {
-  Ei as Calendarify
+  Ei as default
 };

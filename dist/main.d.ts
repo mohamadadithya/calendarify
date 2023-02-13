@@ -1,5 +1,5 @@
 import type { Locale } from './utils/types';
-export declare class Calendarify {
+export default class Calendarify {
     options: this & Partial<Calendarify>;
     locale: Locale;
     startDate: string;
