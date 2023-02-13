@@ -30,7 +30,7 @@ export interface Locale {
     weekdays?: string[];
     lang: Lang;
 }
-export interface HolidayClassHandler {
+export interface HolidayClass {
     date: string;
     nowMonth: string;
 }

@@ -2,7 +2,6 @@ import type { Locale } from './utils/types';
 export declare class Calendarify {
     options: this & Partial<Calendarify>;
     locale: Locale;
-    rootContainer: HTMLAreaElement;
     startDate: string;
     accentColor: string;
     quickActions: boolean;
@@ -30,8 +29,10 @@ export declare class Calendarify {
     private _wrapperEls;
     private _yearRangeButton;
     private _systemFormat;
+    private _helpers;
     constructor(inputSelector: string, options: Partial<Calendarify>);
     init(): void;
+    private stylingContainer;
     private get _years();
     private quickAction;
     private showValue;
