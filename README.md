@@ -10,8 +10,8 @@ Calendarify is a simple datepicker javascript library.
 <link rel="stylesheet" type="text/css" href="https://rawcdn.githack.com/mohamadadithya/calendarify/5fca1d1c3519d08abc6dcf81b0b363c7895b4eaa/dist/calendarify.min.css">
 
 <!-- You can also choose UMD version -->
-<script src="https://rawcdn.githack.com/mohamadadithya/calendarify/5fca1d1c3519d08abc6dcf81b0b363c7895b4eaa/dist/calendarify.js">
-<script src="https://rawcdn.githack.com/mohamadadithya/calendarify/5fca1d1c3519d08abc6dcf81b0b363c7895b4eaa/dist/calendarify.umd.js">
+<script src="https://rawcdn.githack.com/mohamadadithya/calendarify/5fca1d1c3519d08abc6dcf81b0b363c7895b4eaa/dist/calendarify.js"></script>
+<script src="https://rawcdn.githack.com/mohamadadithya/calendarify/5fca1d1c3519d08abc6dcf81b0b363c7895b4eaa/dist/calendarify.umd.js"></script>
 ```
 
 #### JSDelivr
@@ -20,8 +20,8 @@ Calendarify is a simple datepicker javascript library.
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/mohamadadithya/calendarify@latest/dist/calendarify.min.css">
 
 <!-- You can also choose UMD version -->
-<script src="https://cdn.jsdelivr.net/gh/mohamadadithya/calendarify@latest/dist/calendarify.js">
-<script src="https://cdn.jsdelivr.net/gh/mohamadadithya/calendarify@latest/dist/calendarify.umd.js">
+<script src="https://cdn.jsdelivr.net/gh/mohamadadithya/calendarify@latest/dist/calendarify.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mohamadadithya/calendarify@latest/dist/calendarify.umd.js"></script>
 ```
 
 #### Statically
@@ -30,8 +30,8 @@ Calendarify is a simple datepicker javascript library.
 <link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/mohamadadithya/calendarify/master/dist/calendarify.min.css">
 
 <!-- You can also choose UMD version -->
-<script src="https://cdn.statically.io/gh/mohamadadithya/calendarify/master/dist/calendarify.js">
-<script src="https://cdn.statically.io/gh/mohamadadithya/calendarify/master/dist/calendarify.umd.js">
+<script src="https://cdn.statically.io/gh/mohamadadithya/calendarify/master/dist/calendarify.js"></script>
+<script src="https://cdn.statically.io/gh/mohamadadithya/calendarify/master/dist/calendarify.umd.js"></script>
 ```
 
 #### NPM
@@ -79,7 +79,7 @@ Include `calendarify.min.css` in the `<head>` first
 ```html
 <head>
   ...
-  <link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/mohamadadithya/calendarify/master/dist/calendarify.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/mohamadadithya/calendarify/master/dist/calendarify.min.css" />
 </head>
 ```
 
@@ -88,7 +88,7 @@ and then include `calendarify.js` just above your closing `</body>` tag...
 ```html
 <body>
   ...
-  <script src="https://cdn.statically.io/gh/mohamadadithya/calendarify/master/dist/calendarify.js">
+  <script src="https://cdn.statically.io/gh/mohamadadithya/calendarify/master/dist/calendarify.js"></script>
 </body>
 ```
 
