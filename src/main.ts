@@ -3,7 +3,7 @@ import moment from 'moment'
 import { Helpers } from './utils/helpers'
 import type { Date, ExpandedMode, Locale } from './utils/types'
 
-export class Calendarify {
+export default class Calendarify {
   public options
   public locale: Locale
   public startDate: string

@@ -1,4 +1,4 @@
-import { Calendarify } from "./main"
+import Calendarify from "./main"
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div class="wrapper">
