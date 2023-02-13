@@ -5,6 +5,7 @@ import dts from 'vite-plugin-dts'
 export default defineConfig({
     plugins: [dts({ insertTypesEntry: true })],
     build: {
+        rollupOptions: { output: { assetFileNames: 'calendarify.min.[ext]' }},
         lib: {
             entry: resolve(__dirname, 'src/main.ts'),
             name: 'Calendarify',

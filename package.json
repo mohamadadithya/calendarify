@@ -1,9 +1,13 @@
 {
   "name": "calendarify",
   "private": false,
-  "version": "0.0.7",
+  "version": "0.0.8",
   "type": "module",
-  "files": ["dist/*.css", "dist/*.js", "dist/*.ts"],
+  "files": [
+    "dist/*.css",
+    "dist/*.js",
+    "dist/*.ts"
+  ],
   "main": "./dist/calendarify.umd.cjs",
   "module": "./dist/calendarify.js",
   "types": "./dist/main.d.ts",
@@ -11,10 +15,15 @@
     ".": {
       "import": "./dist/calendarify.js",
       "require": "./dist/calendarify.umd.cjs"
+    },
+    "./calendarify.css": {
+      "import": "./dist/calendarify.min.css"
     }
   },
-  "style": "./dist/style.css",
-  "browserslist": ["last 2 versions"],
+  "style": "./dist/calendarify.min.css",
+  "browserslist": [
+    "last 2 versions"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
