@@ -9,7 +9,7 @@ export class Calendarify {
   public startDate: string
   public accentColor: string = '#0090FC'
   public quickActions: boolean = true
-  public onTrigger: (outputObject: Object) => void
+  public onTrigger?: (outputObject: Object) => void
 
   private _container: HTMLAreaElement
   private _calendarWrapper: HTMLAreaElement
@@ -35,6 +35,8 @@ export class Calendarify {
   private _yearRangeButton: HTMLButtonElement
   private _systemFormat: string = 'YYYY-MM-DD'
   private _helpers: any
+  private _inputSelector: string
+  private _wasExecuted: boolean = false
 
   constructor(inputSelector: string, options: Partial<Calendarify>) {
     const rootElement = document.documentElement
@@ -42,6 +44,7 @@ export class Calendarify {
     this.options = Object.assign(this, options)
     rootElement.style.setProperty('--accentColor', this.options.accentColor)
     this.onTrigger = this.options.onTrigger
+    this._inputSelector = inputSelector
 
     const localeObject: Locale = {
       format: this._systemFormat,
@@ -116,6 +119,8 @@ export class Calendarify {
   }
 
   public init() {
+    moment.suppressDeprecationWarnings = true;
+    
     this.showValue()
     this.changeState()
 
@@ -131,7 +136,10 @@ export class Calendarify {
     this._nextButton.addEventListener('click', this.nextMonth.bind(this))
 
     this._expandButton.addEventListener('click', this.expand.bind(this))
-    this._datepickerInput.addEventListener('focus', () => this._container.classList.add('show'))
+    this._datepickerInput.addEventListener('focus', () => {
+      this._wasExecuted = true
+      this._container.classList.add('show')
+    })
 
     window.addEventListener('click', this.hideOnOutsideClick.bind(this))
     this._quickButtons.forEach(button => button.addEventListener('click', this.quickAction.bind(this)))
@@ -182,9 +190,10 @@ export class Calendarify {
 
   private hideOnOutsideClick(event: Event) {
     const targetElement = event.target as HTMLElement
-    if(!targetElement.closest('.calendarify-input') && !targetElement.closest('.calendarify')) {
+    if(!targetElement.closest(this._inputSelector) && !targetElement.closest('.calendarify')) {
       this._container.classList.remove('show')
       this.doneState()
+      this._wasExecuted = false
     }
   }
 
@@ -278,7 +287,7 @@ export class Calendarify {
     }
 
     this.resetUI()
-    this.onTrigger(object)
+    if(this.onTrigger && this._wasExecuted) this.onTrigger(object)
   }
 
   private resetUI() {

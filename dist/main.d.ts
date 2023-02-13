@@ -5,7 +5,7 @@ export declare class Calendarify {
     startDate: string;
     accentColor: string;
     quickActions: boolean;
-    onTrigger: (outputObject: Object) => void;
+    onTrigger?: (outputObject: Object) => void;
     private _container;
     private _calendarWrapper;
     private _datepickerInput;
@@ -30,6 +30,8 @@ export declare class Calendarify {
     private _yearRangeButton;
     private _systemFormat;
     private _helpers;
+    private _inputSelector;
+    private _wasExecuted;
     constructor(inputSelector: string, options: Partial<Calendarify>);
     init(): void;
     private stylingContainer;
