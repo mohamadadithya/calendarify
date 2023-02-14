@@ -27,11 +27,9 @@
   background: var(--background);
   box-shadow: var(--soft-box-shadow);
   color: var(--textColor);
-  width: fit-content;
   font-family: inherit;
   border-radius: 1em;
   display: none;
-  max-width: 300px;
 
   &:is([data-theme="dark"]) {
     --background: hsl(0, 0%, 10%);
