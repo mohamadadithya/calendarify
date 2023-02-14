@@ -5,8 +5,9 @@ export default class Calendarify {
     startDate: string;
     accentColor: string;
     isDark: boolean;
+    customClass: string[];
     quickActions: boolean;
-    onTrigger?: (outputObject: Object) => void;
+    onChange?: (outputObject: Object) => void;
     private _container;
     private _calendarWrapper;
     private _datepickerInput;
@@ -33,6 +34,7 @@ export default class Calendarify {
     private _helpers;
     private _inputSelector;
     private _wasExecuted;
+    private _isSetted;
     constructor(inputSelector: string, options?: Partial<Calendarify>);
     init(): void;
     private stylingContainer;

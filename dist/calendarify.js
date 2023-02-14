@@ -2590,8 +2590,9 @@ class ho {
     f(this, "startDate");
     f(this, "accentColor", "#0090FC");
     f(this, "isDark", !1);
+    f(this, "customClass", []);
     f(this, "quickActions", !0);
-    f(this, "onTrigger");
+    f(this, "onChange");
     f(this, "_container");
     f(this, "_calendarWrapper");
     f(this, "_datepickerInput");
@@ -2618,9 +2619,10 @@ class ho {
     f(this, "_helpers");
     f(this, "_inputSelector");
     f(this, "_wasExecuted", !1);
+    f(this, "_isSetted", !1);
     var r, n, i, h, c, y, Y, E, S, be, xe, Te, me, Et, Rt, Pt, Nt, Lt, Ft, Ct, It, At, Ut, Ht, $t, Vt, Gt, jt, qt, Bt, zt, Zt, Jt, Qt, Xt, Kt, es, ts, ss, as, rs, ns, is, os;
     const a = document.documentElement;
-    this.options = Object.assign(this, s), a.style.setProperty("--accentColor", (r = this.options.accentColor) != null ? r : this.accentColor), this.onTrigger = this.options.onTrigger, this._inputSelector = t, this.locale = {
+    this.options = Object.assign(this, s), a.style.setProperty("--accentColor", (r = this.options.accentColor) != null ? r : this.accentColor), this.onChange = this.options.onChange, this._inputSelector = t, this.locale = {
       format: (h = (i = (n = this.options) == null ? void 0 : n.locale) == null ? void 0 : i.format) != null ? h : this._systemFormat,
       lang: {
         code: (E = (Y = (y = (c = this.options) == null ? void 0 : c.locale) == null ? void 0 : y.lang) == null ? void 0 : Y.code) != null ? E : "en",
@@ -2657,8 +2659,8 @@ class ho {
     }), window.addEventListener("click", this.hideOnOutsideClick.bind(this)), this._quickButtons.forEach((t) => t.addEventListener("click", this.quickAction.bind(this)));
   }
   stylingContainer() {
-    var s;
-    (s = this.options) != null && s.isDark && this._container.setAttribute("data-theme", "dark");
+    var s, a;
+    (s = this.options) != null && s.isDark && this._container.setAttribute("data-theme", "dark"), (a = this.options) != null && a.customClass && this.customClass.forEach((r) => this._container.classList.add(r));
     const t = this._datepickerInput.parentElement;
     t.style.position = "relative", this._container.style.top = `${this._datepickerInput.clientHeight + 12}px`;
   }
@@ -2731,7 +2733,9 @@ class ho {
         year: o(this._outputDate).format("YYYY")
       }
     };
-    this.resetUI(), this.onTrigger && this._wasExecuted && this.onTrigger(t);
+    this.resetUI();
+    const { onChange: s, _wasExecuted: a, _isSetted: r } = this;
+    s && a && r && (s(t), this._isSetted = !1);
   }
   resetUI() {
     this._monthsWrapperEl.classList.add("d-none"), this._yearsWrapperEl.classList.add("d-none"), this._wrapperEls.forEach((t) => t.classList.remove("d-none")), this._isExpanded = !1, this._monthsWrapperEl.classList.add("d-none"), this._yearsWrapperEl.classList.add("d-none"), this._expandButton.classList.remove("d-none"), this._yearRangeButton.classList.add("d-none"), this.changeState();
@@ -2763,6 +2767,7 @@ class ho {
     this._datesWrapperEl.innerHTML = `${this._dates.map((t) => `<li><button ${t.disabled ? "disabled" : ""} type="button" class="date-button ${this._helpers.getHolidayClass({ date: t.date, nowMonth: this._nowMonth })} ${this._nowDay == String(t.date) ? "active" : ""}">${t.date}</button></li>`).join("")}`;
   }
   setDate(t) {
+    this._isSetted = !0;
     const s = t.target;
     this._dateButtons.forEach((a) => a.classList.remove("active")), this._nowDay = String(s.textContent), this._date = `${o(`${this._nowMonth}-${this._nowDay}`).format(this._systemFormat)}`, this.showValue(), s.classList.add("active");
   }

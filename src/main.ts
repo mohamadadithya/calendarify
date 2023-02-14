@@ -9,8 +9,9 @@ export default class Calendarify {
   public startDate: string
   public accentColor: string = '#0090FC'
   public isDark: boolean = false
+  public customClass: string[] = []
   public quickActions: boolean = true
-  public onTrigger?: (outputObject: Object) => void
+  public onChange?: (outputObject: Object) => void
 
   private _container: HTMLAreaElement
   private _calendarWrapper: HTMLAreaElement
@@ -38,6 +39,7 @@ export default class Calendarify {
   private _helpers: any
   private _inputSelector: string
   private _wasExecuted: boolean = false
+  private _isSetted: boolean = false
 
   constructor(inputSelector: string, options?: Partial<Calendarify>) {
     const rootElement = document.documentElement
@@ -45,7 +47,7 @@ export default class Calendarify {
     this.options = Object.assign(this, options)
     rootElement.style.setProperty('--accentColor', this.options.accentColor ?? this.accentColor)
 
-    this.onTrigger = this.options.onTrigger
+    this.onChange = this.options.onChange
     this._inputSelector = inputSelector
 
     this.locale = {
@@ -138,6 +140,9 @@ export default class Calendarify {
 
   private stylingContainer() {
     if(this.options?.isDark) this._container.setAttribute('data-theme', 'dark')
+    if(this.options?.customClass) {
+      this.customClass.forEach(customClass => this._container.classList.add(customClass))
+    }
     const wrapper = this._datepickerInput.parentElement as HTMLAreaElement
     wrapper.style.position = 'relative'
     this._container.style.top = `${this._datepickerInput.clientHeight + 12}px`
@@ -279,7 +284,12 @@ export default class Calendarify {
     }
 
     this.resetUI()
-    if(this.onTrigger && this._wasExecuted) this.onTrigger(object)
+
+    const { onChange, _wasExecuted, _isSetted } = this
+    if(onChange && _wasExecuted && _isSetted) {
+      onChange(object)
+      this._isSetted = false
+    }
   }
 
   private resetUI() {
@@ -344,6 +354,7 @@ export default class Calendarify {
   }
 
   private setDate(event: Event) {
+    this._isSetted = true
     const targetElement = event.target as HTMLButtonElement
     this._dateButtons.forEach(button => button.classList.remove('active'))
     this._nowDay = String(targetElement.textContent)
