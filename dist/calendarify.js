@@ -2662,7 +2662,7 @@ class ho {
     var s, a;
     (s = this.options) != null && s.isDark && this._container.setAttribute("data-theme", "dark"), (a = this.options) != null && a.customClass && this.customClass.forEach((r) => this._container.classList.add(r));
     const t = this._datepickerInput.parentElement;
-    t.style.position = "relative", this._container.style.top = `${this._datepickerInput.clientHeight + 12}px`;
+    t.style.position = "relative", this._container.style.top = `${t.clientHeight + 12}px`;
   }
   get _years() {
     const t = [], s = o(this._date), a = o(this._date).add(11, "y");

@@ -145,7 +145,7 @@ export default class Calendarify {
     }
     const wrapper = this._datepickerInput.parentElement as HTMLAreaElement
     wrapper.style.position = 'relative'
-    this._container.style.top = `${this._datepickerInput.clientHeight + 12}px`
+    this._container.style.top = `${wrapper.clientHeight + 12}px`
   }
 
   private get _years() {
