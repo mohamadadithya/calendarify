@@ -1,5 +1,7 @@
 # Calendarify
 
+[![npm version](https://badge.fury.io/js/calendarify.svg)](https://badge.fury.io/js/calendarify)
+
 Calendarify is a simple datepicker javascript library.
 
 ## Installation
