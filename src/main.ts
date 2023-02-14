@@ -4,7 +4,7 @@ import { Helpers } from './utils/helpers'
 import type { Date, ExpandedMode, Locale } from './utils/types'
 
 export default class Calendarify {
-  public options
+  public options: Partial<Calendarify>
   public locale: Locale
   public startDate: string
   public accentColor: string = '#0090FC'
@@ -38,11 +38,11 @@ export default class Calendarify {
   private _inputSelector: string
   private _wasExecuted: boolean = false
 
-  constructor(inputSelector: string, options: Partial<Calendarify>) {
+  constructor(inputSelector: string, options?: Partial<Calendarify>) {
     const rootElement = document.documentElement
 
     this.options = Object.assign(this, options)
-    rootElement.style.setProperty('--accentColor', this.options.accentColor)
+    rootElement.style.setProperty('--accentColor', this.options.accentColor ?? this.accentColor)
     this.onTrigger = this.options.onTrigger
     this._inputSelector = inputSelector
 
@@ -63,17 +63,17 @@ export default class Calendarify {
     }
 
     this.locale = {
-      format: options.locale?.format ?? this._systemFormat,
+      format: options?.locale?.format ?? this._systemFormat,
       lang: {
-        code: options.locale?.lang?.code ?? localeObject.lang.code,
-        ui: { quickActions: options.locale?.lang.ui?.quickActions || localeObject.lang.ui?.quickActions },
-        months: options.locale?.lang.months ?? localeObject.lang.months,
-        weekdays: options.locale?.lang.weekdays ?? localeObject.lang.weekdays
+        code: options?.locale?.lang?.code ?? localeObject.lang.code,
+        ui: { quickActions: options?.locale?.lang.ui?.quickActions ?? localeObject.lang.ui?.quickActions },
+        months: options?.locale?.lang.months ?? localeObject.lang.months,
+        weekdays: options?.locale?.lang.weekdays ?? localeObject.lang.weekdays
       }
     }
 
     this.startDate = this.options.startDate ?? moment().format(this._systemFormat)
-    this._date = this.options.startDate
+    this._date = this.options.startDate ?? this.startDate
     
     this._months = []
     for(let i = 0; i < 12; i++) {this._months.push(String(i + 1))}
@@ -100,8 +100,8 @@ export default class Calendarify {
 
     this._helpers.render()
 
-    const { months, weekdays } = this.options.locale.lang
-    moment.updateLocale(this.options.locale.lang.code!, { months, weekdays })
+    const { months, weekdays } = this.options.locale?.lang ?? this.locale.lang
+    moment.updateLocale(this.options?.locale?.lang.code!, { months, weekdays })
 
     this._container = document.querySelector('.calendarify') as HTMLAreaElement
     this._datepickerInput = document.querySelector(inputSelector) as HTMLInputElement
@@ -168,13 +168,13 @@ export default class Calendarify {
 
     switch (data) {
       case "today":
-        this._date = moment().format(this._systemFormat)       
+        this._date = this.startDate
         break
       case "tomorrow":
-        this._date = moment().add(1, 'days').format(this._systemFormat)
+        this._date = moment(this.startDate).add(1, 'days').format(this._systemFormat)
         break
       default:
-        this._date = moment().add(2, 'days').format(this._systemFormat)
+        this._date = moment(this.startDate).add(2, 'days').format(this._systemFormat)
         break
     }
 
