@@ -8,6 +8,7 @@ export default class Calendarify {
   public locale: Locale
   public startDate: string
   public accentColor: string = '#0090FC'
+  public isDark: boolean = false
   public quickActions: boolean = true
   public onTrigger?: (outputObject: Object) => void
 
@@ -43,6 +44,7 @@ export default class Calendarify {
 
     this.options = Object.assign(this, options)
     rootElement.style.setProperty('--accentColor', this.options.accentColor ?? this.accentColor)
+
     this.onTrigger = this.options.onTrigger
     this._inputSelector = inputSelector
 
@@ -135,6 +137,7 @@ export default class Calendarify {
   }
 
   private stylingContainer() {
+    if(this.options?.isDark) this._container.setAttribute('data-theme', 'dark')
     const wrapper = this._datepickerInput.parentElement as HTMLAreaElement
     wrapper.style.position = 'relative'
     this._container.style.top = `${this._datepickerInput.clientHeight + 12}px`

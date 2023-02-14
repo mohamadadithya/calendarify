@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/calendarify.svg)](https://badge.fury.io/js/calendarify)
 
-Calendarify is a simple datepicker javascript library.
+Calendarify is a simple and lightweight JavaScript datepicker library.
 
 ## Installation
 
@@ -86,6 +86,8 @@ calendarify.init() // Initialize calendarify
 
 ```javascript
 const options = {
+  accentColor: '#0090FC', // You can customize the accent color
+  isDark: true, // You can enable/disable dark mode
   onTrigger: (calendarify) => console.log(calendarify), // You can trigger whatever function in this property (e.g. to fetch data with passed date parameter)
   quickActions: true, // You can enable/disable quick action (Today, Tomorrow, In 2 Days) buttons with boolean
   locale: { // You can set locale for calendar

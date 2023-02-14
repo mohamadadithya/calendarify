@@ -2589,6 +2589,7 @@ class ho {
     f(this, "locale");
     f(this, "startDate");
     f(this, "accentColor", "#0090FC");
+    f(this, "isDark", !1);
     f(this, "quickActions", !0);
     f(this, "onTrigger");
     f(this, "_container");
@@ -2656,6 +2657,8 @@ class ho {
     }), window.addEventListener("click", this.hideOnOutsideClick.bind(this)), this._quickButtons.forEach((t) => t.addEventListener("click", this.quickAction.bind(this)));
   }
   stylingContainer() {
+    var s;
+    (s = this.options) != null && s.isDark && this._container.setAttribute("data-theme", "dark");
     const t = this._datepickerInput.parentElement;
     t.style.position = "relative", this._container.style.top = `${this._datepickerInput.clientHeight + 12}px`;
   }

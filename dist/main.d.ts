@@ -4,6 +4,7 @@ export default class Calendarify {
     locale: Locale;
     startDate: string;
     accentColor: string;
+    isDark: boolean;
     quickActions: boolean;
     onTrigger?: (outputObject: Object) => void;
     private _container;
