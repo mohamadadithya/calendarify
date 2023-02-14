@@ -1,6 +1,6 @@
 import type { Locale } from './utils/types';
 export default class Calendarify {
-    options: this & Partial<Calendarify>;
+    options: Partial<Calendarify>;
     locale: Locale;
     startDate: string;
     accentColor: string;
@@ -32,7 +32,7 @@ export default class Calendarify {
     private _helpers;
     private _inputSelector;
     private _wasExecuted;
-    constructor(inputSelector: string, options: Partial<Calendarify>);
+    constructor(inputSelector: string, options?: Partial<Calendarify>);
     init(): void;
     private stylingContainer;
     private get _years();
