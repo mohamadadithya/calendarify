@@ -46,29 +46,19 @@ export default class Calendarify {
     this.onTrigger = this.options.onTrigger
     this._inputSelector = inputSelector
 
-    const localeObject: Locale = {
-      format: this._systemFormat,
+    this.locale = {
+      format: this.options?.locale?.format ?? this._systemFormat,
       lang: {
-        code: 'en',
-        ui: {
+        code: this.options?.locale?.lang?.code ?? 'en',
+        ui: { 
           quickActions: {
-            today: 'Today',
-            tomorrow: 'Tomorrow',
-            inTwoDays: 'In 2 Days'
+            today: this.options?.locale?.lang?.ui?.quickActions?.today ?? 'Today',
+            tomorrow: this.options?.locale?.lang?.ui?.quickActions?.tomorrow ?? 'Tomorrow',
+            inTwoDays: this.options?.locale?.lang?.ui?.quickActions?.inTwoDays ?? 'In 2 Days'
           }
         },
-        months: moment.months(),
-        weekdays: moment.weekdays()
-      }
-    }
-
-    this.locale = {
-      format: options?.locale?.format ?? this._systemFormat,
-      lang: {
-        code: options?.locale?.lang?.code ?? localeObject.lang.code,
-        ui: { quickActions: options?.locale?.lang.ui?.quickActions ?? localeObject.lang.ui?.quickActions },
-        months: options?.locale?.lang.months ?? localeObject.lang.months,
-        weekdays: options?.locale?.lang.weekdays ?? localeObject.lang.weekdays
+        months: this.options?.locale?.lang?.months ?? moment.months(),
+        weekdays: this.options?.locale?.lang?.weekdays ?? moment.weekdays()
       }
     }
 
@@ -100,8 +90,7 @@ export default class Calendarify {
 
     this._helpers.render()
 
-    const { months, weekdays } = this.options.locale?.lang ?? this.locale.lang
-    moment.updateLocale(this.options?.locale?.lang.code!, { months, weekdays })
+    moment.updateLocale(this.options?.locale?.lang?.code!, { months: this.options.locale?.lang?.months, weekdays: this.options.locale?.lang?.weekdays })
 
     this._container = document.querySelector('.calendarify') as HTMLAreaElement
     this._datepickerInput = document.querySelector(inputSelector) as HTMLInputElement
@@ -311,7 +300,7 @@ export default class Calendarify {
 
     const formattedMonth = moment(this._nowMonth).format('M')
     const formattedYear = moment(this._nowMonth).format('YYYY')
-    this._expandButton.textContent = `${this.locale.lang.months![+formattedMonth - 1]} ${formattedYear}`
+    this._expandButton.textContent = `${this.locale.lang?.months![+formattedMonth - 1]} ${formattedYear}`
 
     switch (this._expandedMode) {
       case "years":

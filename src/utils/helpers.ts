@@ -27,9 +27,9 @@ export class Helpers {
   render() {
     this.container.innerHTML += `<div class="calendarify">
     <div class="quick-actions ${!this.quickActions ? 'd-none' : ''}">
-      <button data-action="today">${this.locale.lang.ui?.quickActions?.today}</button>
-      <button data-action="tomorrow">${this.locale.lang.ui?.quickActions?.tomorrow}</button>
-      <button data-action="in-2-days">${this.locale.lang.ui?.quickActions?.inTwoDays}</button>
+      <button data-action="today">${this.locale.lang?.ui?.quickActions?.today}</button>
+      <button data-action="tomorrow">${this.locale.lang?.ui?.quickActions?.tomorrow}</button>
+      <button data-action="in-2-days">${this.locale.lang?.ui?.quickActions?.inTwoDays}</button>
     </div>
     <nav class="navigation">
       <ul>
@@ -47,7 +47,7 @@ export class Helpers {
     </nav>
     <div class="calendar">
       <ul class="days-wrapper wrapper">
-      ${this.locale.lang.weekdays?.map((day) => { return `<li>${day.slice(0, 3)}</li>` }).join("")}
+      ${this.locale.lang?.weekdays?.map((day) => { return `<li>${day.slice(0, 3)}</li>` }).join("")}
       </ul>
       <ul class="dates-wrapper wrapper">
           ${this.dates
@@ -62,7 +62,7 @@ export class Helpers {
       </ul>
       <ul class="months-wrapper wrapper d-none">
         ${this.months.map((month, index) => {
-          const monthShort = this.locale.lang.months![index].slice(0, 3)
+          const monthShort = this.locale.lang?.months![index].slice(0, 3)
           const nowMonthOnly = moment().format('M')
           return `<li><button class="${month == nowMonthOnly ? 'active' : ''}" data-date="${month}" type="button">${monthShort}</button></li>`
         }).join('')}

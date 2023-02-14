@@ -25,10 +25,10 @@ export interface Render {
     locale: Locale;
 }
 export interface Locale {
-    format: string;
+    format?: string;
     months?: string[];
     weekdays?: string[];
-    lang: Lang;
+    lang?: Lang;
 }
 export interface HolidayClass {
     date: string;
