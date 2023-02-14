@@ -7,31 +7,29 @@ Calendarify is a simple datepicker javascript library.
 #### GitHack
 
 ```html
-<link rel="stylesheet" type="text/css" href="https://rawcdn.githack.com/mohamadadithya/calendarify/5fca1d1c3519d08abc6dcf81b0b363c7895b4eaa/dist/calendarify.min.css">
-
-<!-- You can also choose UMD version -->
-<script src="https://rawcdn.githack.com/mohamadadithya/calendarify/5fca1d1c3519d08abc6dcf81b0b363c7895b4eaa/dist/calendarify.js"></script>
-<script src="https://rawcdn.githack.com/mohamadadithya/calendarify/5fca1d1c3519d08abc6dcf81b0b363c7895b4eaa/dist/calendarify.umd.js"></script>
+<link rel="stylesheet" type="text/css" href="https://rawcdn.githack.com/mohamadadithya/calendarify/f3dcb07988fc1b1a16e161a4aaa52e37ff547aac/dist/calendarify.min.css?min=1">
+<script src="https://rawcdn.githack.com/mohamadadithya/calendarify/f3dcb07988fc1b1a16e161a4aaa52e37ff547aac/dist/calendarify.iife.js?min=1"></script>
 ```
 
 #### JSDelivr
 
 ```html
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/mohamadadithya/calendarify@latest/dist/calendarify.min.css">
-
-<!-- You can also choose UMD version -->
-<script src="https://cdn.jsdelivr.net/gh/mohamadadithya/calendarify@latest/dist/calendarify.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/mohamadadithya/calendarify@latest/dist/calendarify.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mohamadadithya/calendarify@latest/dist/calendarify.iife.js"></script>
 ```
 
 #### Statically
 
 ```html
 <link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/mohamadadithya/calendarify/master/dist/calendarify.min.css">
+<script src="https://cdn.statically.io/gh/mohamadadithya/calendarify/master/dist/calendarify.iife.js"></script>
+```
 
-<!-- You can also choose UMD version -->
-<script src="https://cdn.statically.io/gh/mohamadadithya/calendarify/master/dist/calendarify.js"></script>
-<script src="https://cdn.statically.io/gh/mohamadadithya/calendarify/master/dist/calendarify.umd.js"></script>
+#### UNPKG
+
+```html
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/calendarify@latest/dist/calendarify.min.css">
+<script src="https://unpkg.com/calendarify@latest/dist/calendarify.iife.js"></script>
 ```
 
 #### NPM
@@ -79,16 +77,16 @@ Include `calendarify.min.css` in the `<head>` first
 ```html
 <head>
   ...
-  <link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/mohamadadithya/calendarify/master/dist/calendarify.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/calendarify@latest/dist/calendarify.min.css" />
 </head>
 ```
 
-and then include `calendarify.js` just above your closing `</body>` tag...
+and then include `calendarify.iife.js` just above your closing `</body>` tag...
 
 ```html
 <body>
   ...
-  <script src="https://cdn.statically.io/gh/mohamadadithya/calendarify/master/dist/calendarify.js"></script>
+  <script src="https://unpkg.com/calendarify@latest/dist/calendarify.iife.js"></script>
 </body>
 ```
 
