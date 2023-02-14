@@ -63,16 +63,16 @@ export default class Calendarify {
     }
 
     this.locale = {
-      format: options.locale?.format || localeObject.format,
+      format: options.locale?.format ?? this._systemFormat,
       lang: {
-        code: options.locale?.lang?.code || localeObject.lang.code,
+        code: options.locale?.lang?.code ?? localeObject.lang.code,
         ui: { quickActions: options.locale?.lang.ui?.quickActions || localeObject.lang.ui?.quickActions },
-        months: options.locale?.lang.months || localeObject.lang.months,
-        weekdays: options.locale?.lang.weekdays || localeObject.lang.weekdays
+        months: options.locale?.lang.months ?? localeObject.lang.months,
+        weekdays: options.locale?.lang.weekdays ?? localeObject.lang.weekdays
       }
     }
 
-    this.startDate = this.options.startDate || moment().format(this._systemFormat)
+    this.startDate = this.options.startDate ?? moment().format(this._systemFormat)
     this._date = this.options.startDate
     
     this._months = []
