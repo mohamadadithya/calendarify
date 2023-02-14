@@ -6,30 +6,12 @@
   --clr-soft-gray: hsl(0, 0%, 94%);
   --soft-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   --accentColor: #0090FC;
+  --max-width: 300px;
 }
 
-@mixin grid($columns, $gap, $isCenter: true) {
-  display: grid;
-  grid-template-columns: repeat($columns, 1fr);
-  @if $isCenter {
-    align-items: center;
-  }
-  gap: $gap;
-}
+@import "mixins";
 
-@mixin buttonExpand {
-  font-size: .95rem;
-  padding: .65em;
-  border-radius: .6em;
-  font-weight: 500;
-
-  &:is(.active, :hover) {
-    background: var(--accentColor);
-    color: white;
-  }
-}
-
-* {
+*, *:is(::before, ::after) {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -46,26 +28,18 @@
   font-family: inherit;
   border-radius: 1em;
   display: none;
-  width: min(100%, 300px);
+  width: min(100%, var(--max-width));
 
   &:is(.show) {
     display: block;
   }
 
-  button {
-    border: none;
-    background: none;
-    font-family: inherit;
-    cursor: pointer;
-  }
-
-  li {
-    list-style: none;
-  }
+  @import "reset";
 
   .quick-actions {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: .4em;
     margin-bottom: 1em;
 
@@ -133,19 +107,7 @@
     }
   }
 
-  .months-wrapper {
-    @include grid(4, .5em);
-
-    li {
-      text-align: center;
-
-      & > button {
-        @include buttonExpand;
-      }
-    }
-  }
-
-  .years-wrapper {
+  :where(.months-wrapper, .years-wrapper) {
     @include grid(4, .5em);
 
     li {
@@ -183,29 +145,6 @@
             background: var(--clr-soft-gray);
           }
         }
-      }
-    }
-  }
-
-  .trigger-buttons {
-    @include grid(2, .5em, false);
-    margin-top: 1em;
-
-    button {
-      border-radius: .5em;
-      background: var(--clr-soft-gray);
-      font-weight: 500;
-      transition: .2s all ease;
-      color: gray;
-
-      &:last-child {
-        background: var(--accentColor);
-        color: white;
-        padding: .6em 0;
-      }
-
-      &:hover {
-        scale: .96;
       }
     }
   }

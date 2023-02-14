@@ -1,7 +1,7 @@
 {
   "name": "calendarify",
   "private": false,
-  "version": "1.0.7",
+  "version": "1.0.8",
   "type": "module",
   "files": [
     "dist/*.css",
@@ -21,9 +21,7 @@
     }
   },
   "style": "./dist/calendarify.min.css",
-  "browserslist": [
-    "last 2 versions"
-  ],
+  "browserslist": ["last 2 versions"],
   "scripts": {
     "dev": "vite",
     "build": "vite build",

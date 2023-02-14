@@ -1,0 +1,20 @@
+@mixin grid($columns, $gap, $isCenter: true) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  @if $isCenter {
+    align-items: center;
+  }
+  gap: $gap;
+}
+
+@mixin buttonExpand {
+  font-size: .95rem;
+  padding: .65em;
+  border-radius: .6em;
+  font-weight: 500;
+
+  &:is(.active, :hover) {
+    background: var(--accentColor);
+    color: white;
+  }
+}
