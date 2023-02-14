@@ -2,7 +2,19 @@
 
 Calendarify is a simple datepicker javascript library.
 
-### Installation
+## Installation
+
+#### NPM
+
+```shell
+npm i calendarify
+```
+
+#### PNPM
+
+```shell
+pnpm add calendarify
+```
 
 #### GitHack
 
@@ -32,17 +44,7 @@ Calendarify is a simple datepicker javascript library.
 <script src="https://unpkg.com/calendarify@latest/dist/calendarify.iife.js"></script>
 ```
 
-#### NPM
-```shell
-npm i calendarify
-```
-
-#### PNPM
-```shell
-pnpm add calendarify
-```
-
-### How to use
+## How to use
 
 #### ES6
 ```javascript
