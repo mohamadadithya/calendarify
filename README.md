@@ -88,6 +88,7 @@ calendarify.init() // Initialize calendarify
 const options = {
   accentColor: '#0090FC', // You can customize the accent color
   isDark: true, // You can enable/disable dark mode
+  zIndex: 9999, // You can set z-index, default is 1000
   customClass: ['font-poppins'], // You can add custom class to the calendarify element
   onChange: (calendarify) => console.log(calendarify), // You can trigger whatever function in this property (e.g. to fetch data with passed date parameter)
   quickActions: true, // You can enable/disable quick action (Today, Tomorrow, In 2 Days) buttons with boolean

@@ -9,6 +9,7 @@ export default class Calendarify {
   public startDate: string
   public accentColor: string = '#0090FC'
   public isDark: boolean = false
+  public zIndex: number | string = 1000
   public customClass: string[] = []
   public quickActions: boolean = true
   public onChange?: (outputObject: Object) => void
@@ -140,6 +141,7 @@ export default class Calendarify {
 
   private stylingContainer() {
     if(this.options?.isDark) this._container.setAttribute('data-theme', 'dark')
+    if(this.options?.zIndex) this._container.style.setProperty('--z-index', String(this.options.zIndex))
     if(this.options?.customClass) {
       this.customClass.forEach(customClass => this._container.classList.add(customClass))
     }

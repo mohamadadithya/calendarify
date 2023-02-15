@@ -5,6 +5,7 @@ export default class Calendarify {
     startDate: string;
     accentColor: string;
     isDark: boolean;
+    zIndex: number | string;
     customClass: string[];
     quickActions: boolean;
     onChange?: (outputObject: Object) => void;

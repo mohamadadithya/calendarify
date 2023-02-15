@@ -8,7 +8,7 @@
   --soft-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
   --accentColor: #0090FC;
-  --max-width: 300px;
+  --z-index: 1000;
 }
 
 @import "mixins";
@@ -22,7 +22,7 @@
 .calendarify {
   position: absolute;
   left: 0;
-  z-index: 9999;
+  z-index: var(--z-index);
   padding: 1em;
   background: var(--background);
   box-shadow: var(--soft-box-shadow);
