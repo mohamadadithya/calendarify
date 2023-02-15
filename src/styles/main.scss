@@ -1,6 +1,7 @@
 @import url('https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css');
 
 :root {
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
   --background: white;
   --clr-hover: hsl(0, 0%, 94%);
@@ -9,12 +10,6 @@
 
   --accentColor: #0090FC;
   --z-index: 1000;
-}
-
-body {
-  height: 200vh;
-  display: grid;
-  place-items: center;
 }
 
 @import "mixins";
