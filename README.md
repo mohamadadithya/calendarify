@@ -18,13 +18,6 @@ npm i calendarify
 pnpm add calendarify
 ```
 
-#### GitHack
-
-```html
-<link rel="stylesheet" type="text/css" href="https://rawcdn.githack.com/mohamadadithya/calendarify/f3dcb07988fc1b1a16e161a4aaa52e37ff547aac/dist/calendarify.min.css?min=1">
-<script src="https://rawcdn.githack.com/mohamadadithya/calendarify/f3dcb07988fc1b1a16e161a4aaa52e37ff547aac/dist/calendarify.iife.js?min=1"></script>
-```
-
 #### JSDelivr
 
 ```html
