@@ -52,7 +52,7 @@ pnpm add calendarify
 ```javascript
 import Calendarify from "calendarify"
 
-const calendarify = new Calendarify('.input-element', { ...options })
+const calendarify = new Calendarify('.date-input', { ...options })
 calendarify.init() // Initialize calendarify
 ```
 
@@ -71,6 +71,8 @@ and then include `calendarify.iife.js` just above your closing `</body>` tag...
 ```html
 <body>
   ...
+  <input type="text" class="date-input" id="date-input" />
+  ...
   <script src="https://unpkg.com/calendarify@latest/dist/calendarify.iife.js"></script>
 </body>
 ```
@@ -78,7 +80,7 @@ and then include `calendarify.iife.js` just above your closing `</body>` tag...
 If you downloaded the package via zip file from Github, these files are located in the dist folder. Otherwise, you can use the CDNs as shown in the [Installation](#installation).
 
 ```javascript
-const calendarify = new Calendarify('.input-element', { ...options })
+const calendarify = new Calendarify('.date-input', { ...options })
 calendarify.init() // Initialize calendarify
 ```
 
