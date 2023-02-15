@@ -1,9 +1,7 @@
 import Calendarify from "./main"
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-  <div class="wrapper">
-    <input type="text" class="calendarify-input" />
-  </div>
+  <input type="text" class="calendarify-input" />
   <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo autem accusantium provident officia necessitatibus obcaecati. Distinctio ad sint odio esse ullam, et doloribus expedita excepturi aut molestias voluptatem aliquam porro.
   Quos explicabo pariatur quae natus, sed doloremque illo libero quibusdam culpa vitae laborum, nostrum animi quis sint maxime odio dolores! Necessitatibus nihil, id assumenda repellendus rem modi unde beatae dolore.
   Quam nostrum veritatis vitae rem dolore nobis id in. Neque est explicabo rerum debitis? In, totam illum earum sapiente eius mollitia recusandae, amet enim numquam assumenda inventore, fugiat cupiditate autem.

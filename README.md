@@ -109,3 +109,13 @@ const options = {
   }
 }
 ```
+
+## File Sizes
+
+```shell
+dist/calendarify.min.css    3.82 kB   │ gzip:  1.03 kB
+dist/calendarify.js         129.57 kB │ gzip: 35.95 kB
+dist/calendarify.umd.cjs    99.48 kB  │ gzip: 31.91 kB
+dist/calendarify.cjs        99.23 kB  │ gzip: 31.82 kB
+dist/calendarify.iife.js    99.28 kB  │ gzip: 31.83 kB
+```

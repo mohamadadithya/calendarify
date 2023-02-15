@@ -1,5 +1,6 @@
 import './styles/main.scss'
 import moment from 'moment'
+import { createPopper } from '@popperjs/core'
 import { Helpers } from './utils/helpers'
 import type { Date, ExpandedMode, Locale } from './utils/types'
 
@@ -145,9 +146,16 @@ export default class Calendarify {
     if(this.options?.customClass) {
       this.customClass.forEach(customClass => this._container.classList.add(customClass))
     }
-    const wrapper = this._datepickerInput.parentElement as HTMLAreaElement
-    wrapper.style.position = 'relative'
-    this._container.style.top = `${wrapper.clientHeight + 12}px`
+    // For Positioning
+    createPopper(this._datepickerInput, this._container, {
+      placement: 'bottom-start',
+      modifiers: [
+        {
+          name: 'offset',
+          options: { offset: [0, 12] }
+        }
+      ]
+    })
   }
 
   private get _years() {

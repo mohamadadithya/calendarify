@@ -11,6 +11,12 @@
   --z-index: 1000;
 }
 
+body {
+  height: 200vh;
+  display: grid;
+  place-items: center;
+}
+
 @import "mixins";
 
 *, *:is(::before, ::after) {

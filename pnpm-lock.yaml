@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@popperjs/core': ^2.11.6
   '@types/node': ^18.13.0
   autoprefixer: ^10.4.13
   moment: ^2.29.4
@@ -10,6 +11,7 @@ specifiers:
   vite-plugin-dts: ^1.7.2
 
 dependencies:
+  '@popperjs/core': 2.11.6
   moment: 2.29.4
 
 devDependencies:
@@ -283,6 +285,10 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
     dev: true
+
+  /@popperjs/core/2.11.6:
+    resolution: {integrity: sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==}
+    dev: false
 
   /@rollup/pluginutils/5.0.2:
     resolution: {integrity: sha512-pTd9rIsP92h+B6wWwFbW8RkZv4hiR/xKsqre4SIuAOaOEQRxi0lqLke9k2/7WegC85GgUs9pjmOjCUi3In4vwA==}

@@ -39,6 +39,7 @@
     "vite-plugin-dts": "^1.7.2"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.6",
     "moment": "^2.29.4"
   },
   "repository": {
