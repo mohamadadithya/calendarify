@@ -87,8 +87,8 @@ const options = {
   isDark: true, // You can enable/disable dark mode
   zIndex: 9999, // You can set z-index, default is 1000
   customClass: ['font-poppins'], // You can add custom class to the calendarify element
-  onChange: (calendarify) => console.log(calendarify), // You can trigger whatever function in this property (e.g. to fetch data with passed date parameter)
-  quickActions: true, // You can enable/disable quick action (Today, Tomorrow, In 2 Days) buttons with boolean
+  onChange: (calendarify) => console.log(calendarify), // You can trigger whatever function in this callback property (e.g. to fetch data with passed date parameter)
+  quickActions: true, // You can enable/disable quick action (Today, Tomorrow, In 2 Days) buttons
   locale: { // You can set locale for calendar
     format: "DD-MM-YYYY", // Set Custom Format with Moment JS
     lang: {
@@ -106,6 +106,99 @@ const options = {
   }
 }
 ```
+
+### Types
+
+#### accentColor
+
+* Type: `String`
+* Default: `#0090FC`
+
+Customize the accent color
+
+#### isDark
+
+* Type: `Boolean`
+* Default: `false`
+
+Enable/disable dark mode
+
+#### zIndex
+
+* Type: `String | Number`
+* Default: `1000`
+
+Set calendarify element **z-index**, default is 1000
+
+#### customClass
+
+* Type: `String[]`
+* Default: `[]`
+
+Add custom classes to the calendarify element
+
+#### onChange
+
+* Type: `Callback`
+* Default: `null`
+
+Trigger whatever function in this callback property (e.g. to fetch data with passed date parameter)
+
+#### quickActions
+
+* Type: `Boolean`
+* Default: `false`
+
+Enable/disable quick action (Today, Tomorrow, In 2 Days) buttons
+
+#### format
+
+* Type: `String`
+* Default: `YYYY-MM-DD`
+
+Set output date format with Moment JS
+
+#### code
+
+* Type: `String`
+* Default: `en`
+
+Set country code (e.g. "en", "id", etc)
+
+#### months
+
+* Type: `String[]`
+* Default: `['January', 'February', ...]`
+
+Set locale month names / Or you can use locale **moment.months()** instead
+
+#### weekdays
+
+* Type: `String[]`
+* Default: `['Sunday', 'Monday', ...]`
+
+Set locale month names / Or you can use locale **moment.weekdays()** instead
+
+#### today
+
+* Type: `String`
+* Default: `Today`
+
+set **today** locale text for quick action buttons
+
+#### tomorrow
+
+* Type: `String`
+* Default: `Tomorrow`
+
+set **tomorrow** locale text for quick action buttons
+
+#### inTwoDays
+
+* Type: `String`
+* Default: `in 2 Days`
+
+set **in 2 days** locale text for quick action buttons
 
 ## File Sizes
 
