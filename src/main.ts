@@ -1,6 +1,6 @@
 import './styles/main.scss'
 import moment from 'moment'
-import { createPopper } from '@popperjs/core'
+import { computePosition, autoUpdate, flip, offset } from '@floating-ui/dom'
 import { Helpers } from './utils/helpers'
 import type { Date, ExpandedMode, Locale } from './utils/types'
 
@@ -146,15 +146,16 @@ export default class Calendarify {
     if(this.options?.customClass) {
       this.customClass.forEach(customClass => this._container.classList.add(customClass))
     }
-    // For Positioning
-    createPopper(this._datepickerInput, this._container, {
-      placement: 'bottom-start',
-      modifiers: [
-        {
-          name: 'offset',
-          options: { offset: [0, 12] }
-        }
-      ]
+
+    const { _datepickerInput: inputElement, _container: containerEl } = this
+
+    autoUpdate(inputElement, containerEl, () => {
+      computePosition(inputElement, containerEl, {
+        placement: 'bottom-start',
+        middleware: [offset(10), flip()]
+      }).then(({ x, y }) => {
+        Object.assign(this._container.style, { top: `${y}px`, left: `${x}px` })
+      })
     })
   }
 
