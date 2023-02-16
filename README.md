@@ -6,6 +6,14 @@
 
 Calendarify is a simple and lightweight Vanilla JavaScript datepicker library.
 
+## Shortlinks
+
+* [Installation](#installation)
+* [How to Use](#how-to-use)
+* [Options](#options)
+  * [Types](#types)
+* [File Sizes](#file-sizes)
+
 ## Installation
 
 #### NPM

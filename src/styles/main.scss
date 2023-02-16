@@ -58,7 +58,7 @@
       background: var(--background);
       box-shadow: var(--soft-box-shadow);
       border-radius: 1.5em;
-      font-weight: 500;
+      font-weight: bold;
       font-size: .85rem;
 
       &:hover {
@@ -69,7 +69,7 @@
   }
 
   .days-wrapper {
-    @include grid(7, .6em);
+    @include grid(7, .3em);
     font-size: .9rem;
     margin-bottom: .6em;
 
@@ -80,7 +80,7 @@
   }
 
   .dates-wrapper {
-    @include grid(7, .4em);
+    @include grid(7, .3em);
     font-size: .9rem;
 
     li {
