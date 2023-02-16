@@ -103,14 +103,14 @@ export default class Calendarify {
     this._datesWrapperEl = this._container.querySelector('.dates-wrapper') as HTMLAreaElement
     this._monthsWrapperEl = this._container.querySelector('.months-wrapper') as HTMLAreaElement
     this._yearsWrapperEl = this._container.querySelector('.years-wrapper') as HTMLAreaElement
-    this._expandButton = this._container.querySelector('.navigation button[data-action="expand"]') as HTMLButtonElement
+    this._expandButton = this._container.querySelector('.calendarify__navigations button[data-action="expand"]') as HTMLButtonElement
     this._dateButtons = this._container.querySelectorAll('.date-button') as NodeListOf<HTMLButtonElement>
-    this._prevButton = this._container.querySelector('.navigation button[data-action="prev"]') as HTMLButtonElement
-    this._nextButton = this._container.querySelector('.navigation button[data-action="next"]') as HTMLButtonElement
-    this._calendarWrapper = this._container.querySelector('.calendar') as HTMLAreaElement
+    this._prevButton = this._container.querySelector('.calendarify__navigations button[data-action="prev"]') as HTMLButtonElement
+    this._nextButton = this._container.querySelector('.calendarify__navigations button[data-action="next"]') as HTMLButtonElement
+    this._calendarWrapper = this._container.querySelector('.calendarify__calendar') as HTMLAreaElement
     this._quickButtons = this._container.querySelectorAll('.quick-actions button') as NodeListOf<HTMLButtonElement>
     this._wrapperEls = this._calendarWrapper.querySelectorAll('.wrapper:not(:last-child, :nth-child(3))') as NodeListOf<HTMLAreaElement>
-    this._yearRangeButton = this._container.querySelector('.navigation button[data-action="year-range"]') as HTMLButtonElement
+    this._yearRangeButton = this._container.querySelector('.calendarify__navigations button[data-action="year-range"]') as HTMLButtonElement
   }
 
   public init() {

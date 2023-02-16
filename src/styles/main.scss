@@ -46,7 +46,7 @@
 
   @import "reset";
 
-  .quick-actions {
+  &__quick-actions {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -68,70 +68,7 @@
     }
   }
 
-  .days-wrapper {
-    @include grid(7, .3em);
-    font-size: .9rem;
-    margin-bottom: .6em;
-
-    li {
-      text-align: center;
-      font-weight: 500;
-    }
-  }
-
-  .dates-wrapper {
-    @include grid(7, .3em);
-    font-size: .9rem;
-
-    li {
-      text-align: center;
-      
-      button {
-        width: 2.5em;
-        height: 2.3em;
-        border-radius: .8em;
-
-        &:is(.active) {
-          background: var(--accentColor);
-          color: white;
-          font-weight: 600;
-        }
-
-        &:not(.active):is(.holiday) {
-          color: red;
-        }
-
-        &:not(.active):is(.pre-holiday) {
-          color: var(--accentColor);
-        }
-
-        &:is(:disabled) {
-          cursor: auto;
-          color: hsl(0, 0%, 70%) !important;
-          background: var(--background);
-          font-weight: 400;
-        }
-
-        &:not(.active, :disabled):hover {
-          background: var(--clr-hover);
-        }
-      }
-    }
-  }
-
-  :where(.months-wrapper, .years-wrapper) {
-    @include grid(4, .5em);
-
-    li {
-      text-align: center;
-
-      & > button {
-        @include buttonExpand;
-      }
-    }
-  }
-
-  .navigation {
+  &__navigations {
     ul {
       display: flex;
       align-items: center;
@@ -156,6 +93,71 @@
           &:hover {
             background: var(--clr-hover);
           }
+        }
+      }
+    }
+  }
+
+  &__calendar {
+    & > .days-wrapper {
+      @include grid(7, .3em);
+      font-size: .9rem;
+      margin-bottom: .6em;
+  
+      li {
+        text-align: center;
+        font-weight: 500;
+      }
+    }
+  
+    & > .dates-wrapper {
+      @include grid(7, .3em);
+      font-size: .9rem;
+  
+      li {
+        text-align: center;
+        
+        button {
+          width: 2.5em;
+          height: 2.3em;
+          border-radius: .8em;
+  
+          &:is(.active) {
+            background: var(--accentColor);
+            color: white;
+            font-weight: 600;
+          }
+  
+          &:not(.active):is(.holiday) {
+            color: red;
+          }
+  
+          &:not(.active):is(.pre-holiday) {
+            color: var(--accentColor);
+          }
+  
+          &:is(:disabled) {
+            cursor: auto;
+            color: hsl(0, 0%, 70%) !important;
+            background: var(--background);
+            font-weight: 400;
+          }
+  
+          &:not(.active, :disabled):hover {
+            background: var(--clr-hover);
+          }
+        }
+      }
+    }
+  
+    & > :where(.months-wrapper, .years-wrapper) {
+      @include grid(4, .5em);
+  
+      li {
+        text-align: center;
+  
+        & > button {
+          @include buttonExpand;
         }
       }
     }

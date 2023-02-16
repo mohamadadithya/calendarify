@@ -26,12 +26,12 @@ export class Helpers {
 
   render() {
     this.container.innerHTML += `<div class="calendarify">
-    <div class="quick-actions ${!this.quickActions ? 'd-none' : ''}">
+    <div class="calendarify__quick-actions ${!this.quickActions ? 'd-none' : ''}">
       <button data-action="today">${this.locale.lang?.ui?.quickActions?.today}</button>
       <button data-action="tomorrow">${this.locale.lang?.ui?.quickActions?.tomorrow}</button>
       <button data-action="in-2-days">${this.locale.lang?.ui?.quickActions?.inTwoDays}</button>
     </div>
-    <nav class="navigation">
+    <nav class="calendarify__navigations">
       <ul>
         <li>
           <button data-action="prev" type="button"><i class="fas fa-fw fa-chevron-left"></i></button>
@@ -45,7 +45,7 @@ export class Helpers {
         </li>
       </ul>
     </nav>
-    <div class="calendar">
+    <div class="calendarify__calendar">
       <ul class="days-wrapper wrapper">
       ${this.locale.lang?.weekdays?.map((day) => { return `<li>${day.slice(0, 3)}</li>` }).join("")}
       </ul>
