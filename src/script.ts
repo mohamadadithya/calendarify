@@ -1,7 +1,6 @@
 import Calendarify from "./main"
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-  <input type="text" class="calendarify-input" />
   <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vehicula lacus a velit commodo, eu aliquam diam maximus. Proin velit tortor, congue sit amet justo ornare, pretium venenatis nisl. Donec eleifend, ante non consequat vulputate, leo tortor tempus orci, rutrum ullamcorper urna nibh vitae ante. Morbi vel lacinia sem. Sed diam dolor, iaculis et dui ac, tincidunt feugiat dolor. Ut eleifend suscipit lorem in tincidunt. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque porttitor lacinia leo pulvinar dignissim.
 
   Ut scelerisque nisi et scelerisque molestie. Praesent nec finibus purus. Donec iaculis nunc quam, sit amet facilisis tellus luctus et. Duis in mattis est, sit amet aliquet justo. Phasellus lacinia facilisis ligula. Vestibulum vitae ante semper, ultricies odio ac, scelerisque lorem. Proin sollicitudin pretium felis, in consectetur magna. Cras aliquam congue vulputate. Donec vitae enim mauris. Maecenas laoreet diam sit amet laoreet scelerisque.
@@ -11,6 +10,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   Etiam id est mi. Proin tempus nulla sed sem placerat lacinia. Vestibulum cursus eleifend enim. Praesent nisi nisi, aliquet in auctor hendrerit, viverra eu nulla. In lacinia semper massa venenatis pellentesque. Integer risus ipsum, commodo vitae leo sit amet, ornare hendrerit neque. Donec efficitur nunc nec hendrerit luctus. Duis congue mi a risus rhoncus finibus nec ut ipsum. Suspendisse porttitor sit amet nisi eu dignissim. Pellentesque eu tortor sit amet quam malesuada dapibus eget eget arcu. Mauris facilisis augue in molestie eleifend.
   
   Phasellus tincidunt sit amet elit et rhoncus. Ut sodales leo eleifend sem elementum euismod. Suspendisse varius efficitur purus non viverra. Praesent facilisis, tellus in luctus porta, lacus lectus hendrerit sapien, ut lacinia augue velit sed sem. Vestibulum maximus elit justo, ut fringilla diam placerat ac. Pellentesque aliquam risus sed gravida lobortis. Nulla quis nibh vitae leo egestas ornare. Aenean vel purus quam. Praesent bibendum vestibulum quam at varius. Integer tempus congue nisl eu hendrerit. Morbi vitae bibendum massa, sed hendrerit nibh. Vivamus vel ligula interdum, vestibulum nisl id, pharetra velit. Duis sodales pellentesque molestie. Donec et laoreet metus.</p>
+  <input type="text" class="calendarify-input" />
 `
 
 const calendarify = new Calendarify('.calendarify-input', {

@@ -1,6 +1,6 @@
 import './styles/main.scss'
 import moment from 'moment'
-import { computePosition, autoUpdate, offset, autoPlacement } from '@floating-ui/dom'
+import { computePosition, autoUpdate, offset, flip } from '@floating-ui/dom'
 import { Helpers } from './utils/helpers'
 import type { Date, ExpandedMode, Locale } from './utils/types'
 
@@ -153,7 +153,7 @@ export default class Calendarify {
     autoUpdate(inputElement, containerEl, () => {
       computePosition(inputElement, containerEl, {
         placement: 'bottom',
-        middleware: [offset(10), autoPlacement({ alignment: 'start', allowedPlacements: ['top', 'bottom'] })]
+        middleware: [offset(10), flip()]
       }).then(({ x, y }) => {
         Object.assign(this._container.style, { top: `${y}px`, left: `${x}px` })
       })
