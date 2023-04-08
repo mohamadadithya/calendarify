@@ -1,6 +1,6 @@
 import './styles/main.scss'
 import moment from 'moment'
-import { computePosition, autoUpdate, flip, offset } from '@floating-ui/dom'
+import { computePosition, autoUpdate, offset, autoPlacement } from '@floating-ui/dom'
 import { Helpers } from './utils/helpers'
 import type { Date, ExpandedMode, Locale } from './utils/types'
 
@@ -120,6 +120,7 @@ export default class Calendarify {
     this.changeState()
 
     this._datepickerInput.spellcheck = false
+    this._datepickerInput.autocomplete = "off"
     this._datepickerInput.addEventListener('input', (event: Event) => {
       const targetElement = event.target as HTMLInputElement
       targetElement.value = this._outputDate
@@ -151,8 +152,8 @@ export default class Calendarify {
 
     autoUpdate(inputElement, containerEl, () => {
       computePosition(inputElement, containerEl, {
-        placement: 'bottom-start',
-        middleware: [offset(10), flip()]
+        placement: 'bottom',
+        middleware: [offset(10), autoPlacement({ alignment: 'start', allowedPlacements: ['top', 'bottom'] })]
       }).then(({ x, y }) => {
         Object.assign(this._container.style, { top: `${y}px`, left: `${x}px` })
       })
