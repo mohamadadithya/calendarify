@@ -2,7 +2,6 @@
 
 [![npm version](https://badge.fury.io/js/calendarify.svg)](https://badge.fury.io/js/calendarify)
 [![npm weekly downloads](https://img.shields.io/npm/dw/calendarify.svg)](https://www.npmjs.com/package/calendarify)
-![npm bundle size](https://img.shields.io/bundlephobia/minzip/calendarify)
 
 Calendarify is a simple and lightweight Vanilla JavaScript datepicker library.
 
