@@ -131,7 +131,7 @@ Customize the accent color
 #### position
 
 * Type: `top | top-start | top-end | right | right-start | right-end | bottom | bottom-start | bottom-end | left | left-start | left-end`
-* Default: `#0090FC`
+* Default: `bottom`
 
 Customize the accent color
 
