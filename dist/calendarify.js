@@ -3024,6 +3024,7 @@ class pl {
     p(this, "customClass", []);
     p(this, "quickActions", !0);
     p(this, "onChange");
+    p(this, "position", "bottom");
     p(this, "_container");
     p(this, "_calendarWrapper");
     p(this, "_datepickerInput");
@@ -3053,7 +3054,10 @@ class pl {
     p(this, "_isSetted", !1);
     var a, r, i, o, u, d, _, c, m, w, k, M, b, O, W, L, F, q, Pe, be, ve, qe, ze, Ze, Je, H, z, re, K, Z, U, ke, Fe, ft, Qe, Xe, mt, _t, Es, Ws, Ls, Ps, Fs, Ns;
     const n = document.documentElement;
-    this.options = Object.assign(this, s), n.style.setProperty("--accentColor", (a = this.options.accentColor) != null ? a : this.accentColor), this.onChange = this.options.onChange, this._inputSelector = t, this.locale = {
+    this.options = Object.assign(this, s), n.style.setProperty(
+      "--accentColor",
+      (a = this.options.accentColor) != null ? a : this.accentColor
+    ), this.onChange = this.options.onChange, this._inputSelector = t, this.locale = {
       format: (o = (i = (r = this.options) == null ? void 0 : r.locale) == null ? void 0 : i.format) != null ? o : this._systemFormat,
       lang: {
         code: (c = (_ = (d = (u = this.options) == null ? void 0 : u.locale) == null ? void 0 : d.lang) == null ? void 0 : _.code) != null ? c : "en",
@@ -3079,7 +3083,34 @@ class pl {
       nowDay: this._nowDay,
       quickActions: this.options.quickActions,
       locale: this.options.locale
-    }), this._helpers.render(), l.updateLocale((Ws = (Es = (_t = this.options) == null ? void 0 : _t.locale) == null ? void 0 : Es.lang) == null ? void 0 : Ws.code, { months: (Ps = (Ls = this.options.locale) == null ? void 0 : Ls.lang) == null ? void 0 : Ps.months, weekdays: (Ns = (Fs = this.options.locale) == null ? void 0 : Fs.lang) == null ? void 0 : Ns.weekdays }), this._container = document.querySelector(".calendarify"), this._datepickerInput = document.querySelector(t), this._datesWrapperEl = this._container.querySelector(".dates-wrapper"), this._monthsWrapperEl = this._container.querySelector(".months-wrapper"), this._yearsWrapperEl = this._container.querySelector(".years-wrapper"), this._expandButton = this._container.querySelector('.calendarify__navigations button[data-action="expand"]'), this._dateButtons = this._container.querySelectorAll(".date-button"), this._prevButton = this._container.querySelector('.calendarify__navigations button[data-action="prev"]'), this._nextButton = this._container.querySelector('.calendarify__navigations button[data-action="next"]'), this._calendarWrapper = this._container.querySelector(".calendarify__calendar"), this._quickButtons = this._container.querySelectorAll(".quick-actions button"), this._wrapperEls = this._calendarWrapper.querySelectorAll(".wrapper:not(:last-child, :nth-child(3))"), this._yearRangeButton = this._container.querySelector('.calendarify__navigations button[data-action="year-range"]');
+    }), this._helpers.render(), l.updateLocale((Ws = (Es = (_t = this.options) == null ? void 0 : _t.locale) == null ? void 0 : Es.lang) == null ? void 0 : Ws.code, {
+      months: (Ps = (Ls = this.options.locale) == null ? void 0 : Ls.lang) == null ? void 0 : Ps.months,
+      weekdays: (Ns = (Fs = this.options.locale) == null ? void 0 : Fs.lang) == null ? void 0 : Ns.weekdays
+    }), this._container = document.querySelector(".calendarify"), this._datepickerInput = document.querySelector(
+      t
+    ), this._datesWrapperEl = this._container.querySelector(
+      ".dates-wrapper"
+    ), this._monthsWrapperEl = this._container.querySelector(
+      ".months-wrapper"
+    ), this._yearsWrapperEl = this._container.querySelector(
+      ".years-wrapper"
+    ), this._expandButton = this._container.querySelector(
+      '.calendarify__navigations button[data-action="expand"]'
+    ), this._dateButtons = this._container.querySelectorAll(
+      ".date-button"
+    ), this._prevButton = this._container.querySelector(
+      '.calendarify__navigations button[data-action="prev"]'
+    ), this._nextButton = this._container.querySelector(
+      '.calendarify__navigations button[data-action="next"]'
+    ), this._calendarWrapper = this._container.querySelector(
+      ".calendarify__calendar"
+    ), this._quickButtons = this._container.querySelectorAll(
+      ".quick-actions button"
+    ), this._wrapperEls = this._calendarWrapper.querySelectorAll(
+      ".wrapper:not(:last-child, :nth-child(3))"
+    ), this._yearRangeButton = this._container.querySelector(
+      '.calendarify__navigations button[data-action="year-range"]'
+    );
   }
   init() {
     l.suppressDeprecationWarnings = !0, this.showValue(), this.changeState(), this._datepickerInput.spellcheck = !1, this._datepickerInput.autocomplete = "off", this._datepickerInput.addEventListener("input", (t) => {
@@ -3087,15 +3118,22 @@ class pl {
       s.value = this._outputDate;
     }), this.stylingContainer(), this._prevButton.addEventListener("click", this.prevMonth.bind(this)), this._nextButton.addEventListener("click", this.nextMonth.bind(this)), this._expandButton.addEventListener("click", this.expand.bind(this)), this._datepickerInput.addEventListener("focus", () => {
       this._wasExecuted = !0, this._container.classList.add("show");
-    }), window.addEventListener("click", this.hideOnOutsideClick.bind(this)), this._quickButtons.forEach((t) => t.addEventListener("click", this.quickAction.bind(this)));
+    }), window.addEventListener("click", this.hideOnOutsideClick.bind(this)), this._quickButtons.forEach(
+      (t) => t.addEventListener("click", this.quickAction.bind(this))
+    );
   }
   stylingContainer() {
     var n, a, r;
-    (n = this.options) != null && n.isDark && this._container.setAttribute("data-theme", "dark"), (a = this.options) != null && a.zIndex && this._container.style.setProperty("--z-index", String(this.options.zIndex)), (r = this.options) != null && r.customClass && this.customClass.forEach((i) => this._container.classList.add(i));
+    (n = this.options) != null && n.isDark && this._container.setAttribute("data-theme", "dark"), (a = this.options) != null && a.zIndex && this._container.style.setProperty(
+      "--z-index",
+      String(this.options.zIndex)
+    ), (r = this.options) != null && r.customClass && this.customClass.forEach(
+      (i) => this._container.classList.add(i)
+    );
     const { _datepickerInput: t, _container: s } = this;
     fl(t, s, () => {
       ml(t, s, {
-        placement: "bottom",
+        placement: this.position,
         middleware: [ul(10), ll()]
       }).then(({ x: i, y: o }) => {
         Object.assign(this._container.style, { top: `${o}px`, left: `${i}px` });
@@ -3134,15 +3172,28 @@ class pl {
   }
   showMonths() {
     this._expandButton.classList.add("d-none"), this._yearRangeButton.classList.remove("d-none");
-    const t = this._monthsWrapperEl.querySelectorAll("button");
-    t.forEach((s) => s.addEventListener("click", (n) => this.changeMonth(n, t))), this._yearRangeButton.addEventListener("click", this.showYears.bind(this));
+    const t = this._monthsWrapperEl.querySelectorAll(
+      "button"
+    );
+    t.forEach(
+      (s) => s.addEventListener(
+        "click",
+        (n) => this.changeMonth(n, t)
+      )
+    ), this._yearRangeButton.addEventListener("click", this.showYears.bind(this));
   }
   showYears() {
-    this._expandedMode = "years", this._monthsWrapperEl.classList.add("d-none"), this._yearsWrapperEl.classList.remove("d-none"), this._yearsWrapperEl.innerHTML = `${this._years.map((s) => `<li><button class="${s == this._nowYear ? "active" : ""}" data-date="${s}" type="button">${s}</button></li>`).join("")}`, this._yearsWrapperEl.querySelectorAll("button").forEach((s) => s.addEventListener("click", this.changeYear.bind(this))), this.changeState();
+    this._expandedMode = "years", this._monthsWrapperEl.classList.add("d-none"), this._yearsWrapperEl.classList.remove("d-none"), this._yearsWrapperEl.innerHTML = `${this._years.map((s) => `<li><button class="${s == this._nowYear ? "active" : ""}" data-date="${s}" type="button">${s}</button></li>`).join("")}`, this._yearsWrapperEl.querySelectorAll(
+      "button"
+    ).forEach(
+      (s) => s.addEventListener("click", this.changeYear.bind(this))
+    ), this.changeState();
   }
   changeYear(t) {
     const n = t.target.getAttribute("data-date"), a = l(this._nowMonth).format("MM");
-    this._date = l(`${n}-${a}-${this._nowDay}`).format(this._systemFormat), this._nowYear = n, this._yearsWrapperEl.classList.add("d-none"), this._monthsWrapperEl.classList.remove("d-none"), this._expandedMode = "months", this.changeState();
+    this._date = l(`${n}-${a}-${this._nowDay}`).format(
+      this._systemFormat
+    ), this._nowYear = n, this._yearsWrapperEl.classList.add("d-none"), this._monthsWrapperEl.classList.remove("d-none"), this._expandedMode = "months", this.changeState();
   }
   changeMonth(t, s) {
     this._wrapperEls.forEach((o) => o.classList.remove("d-none")), s.forEach((o) => o.classList.remove("active"));
@@ -3190,24 +3241,38 @@ class pl {
         this._yearRangeButton.textContent = l(this._date).format("YYYY");
         break;
     }
-    if (this.renderDates(), this._dateButtons = this._datesWrapperEl.querySelectorAll(".date-button"), this._dateButtons.forEach((r) => r.addEventListener("click", this.setDate.bind(this))), this._expandedMode == "months" && this._dates.slice(0, 7).every((i) => i.disabled))
+    if (this.renderDates(), this._dateButtons = this._datesWrapperEl.querySelectorAll(
+      ".date-button"
+    ), this._dateButtons.forEach(
+      (r) => r.addEventListener("click", this.setDate.bind(this))
+    ), this._expandedMode == "months" && this._dates.slice(0, 7).every((i) => i.disabled))
       for (let i = 0; i < 7; i++)
         (a = this._dateButtons[i].parentElement) == null || a.classList.add("d-none");
   }
   loopDaysMonths() {
-    const t = l(this._date).daysInMonth(), s = l(new Date(this._nowMonth)).isoWeekday(), n = l(this._date).subtract(1, "months").daysInMonth();
+    const t = l(this._date).daysInMonth(), s = l(
+      new Date(this._nowMonth)
+    ).isoWeekday(), n = l(this._date).subtract(1, "months").daysInMonth();
     for (let a = 1; a <= s; a++)
-      this._dates.unshift({ disabled: !0, date: String(n + 1 - a) });
+      this._dates.unshift({
+        disabled: !0,
+        date: String(n + 1 - a)
+      });
     for (let a = 1; a <= t; a++)
       this._dates.push({ disabled: !1, date: String(a) });
   }
   renderDates() {
-    this._datesWrapperEl.innerHTML = `${this._dates.map((t) => `<li><button ${t.disabled ? "disabled" : ""} type="button" class="date-button ${this._helpers.getHolidayClass({ date: t.date, nowMonth: this._nowMonth })} ${this._nowDay == String(t.date) ? "active" : ""}">${t.date}</button></li>`).join("")}`;
+    this._datesWrapperEl.innerHTML = `${this._dates.map((t) => `<li><button ${t.disabled ? "disabled" : ""} type="button" class="date-button ${this._helpers.getHolidayClass({
+      date: t.date,
+      nowMonth: this._nowMonth
+    })} ${this._nowDay == String(t.date) ? "active" : ""}">${t.date}</button></li>`).join("")}`;
   }
   setDate(t) {
     this._isSetted = !0;
     const s = t.target;
-    this._dateButtons.forEach((n) => n.classList.remove("active")), this._nowDay = String(s.textContent), this._date = `${l(`${this._nowMonth}-${this._nowDay}`).format(this._systemFormat)}`, this.showValue(), s.classList.add("active");
+    this._dateButtons.forEach((n) => n.classList.remove("active")), this._nowDay = String(s.textContent), this._date = `${l(`${this._nowMonth}-${this._nowDay}`).format(
+      this._systemFormat
+    )}`, this.showValue(), s.classList.add("active");
   }
   prevMonth() {
     if (this._isExpanded)

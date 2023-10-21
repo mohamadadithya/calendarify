@@ -1,4 +1,5 @@
-import type { Locale } from './utils/types';
+import { Placement } from "@floating-ui/dom";
+import type { Locale } from "./utils/types";
 export default class Calendarify {
     options: Partial<Calendarify>;
     locale: Locale;
@@ -9,6 +10,7 @@ export default class Calendarify {
     customClass: string[];
     quickActions: boolean;
     onChange?: (outputObject: Object) => void;
+    position: Placement;
     private _container;
     private _calendarWrapper;
     private _datepickerInput;
