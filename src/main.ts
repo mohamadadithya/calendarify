@@ -477,6 +477,8 @@ export default class Calendarify {
   }
 
   private setDate(event: Event) {
+    if (this._datepickerInput.matches(":disabled")) return;
+
     this._isSetted = true;
     const targetElement = event.target as HTMLButtonElement;
     this._dateButtons.forEach((button) => button.classList.remove("active"));
